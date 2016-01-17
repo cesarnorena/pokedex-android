@@ -10,6 +10,12 @@ import android.net.NetworkInfo;
  */
 public class MyApplication extends Application {
 
+    /**
+     * Verifica si hay acceso a internet
+     *
+     * @param ctx
+     * @return retorna true hay conexion a internet
+     */
     public static boolean isConnected(Context ctx) {
         ConnectivityManager cm =
                 (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);

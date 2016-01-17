@@ -28,6 +28,8 @@ import retrofit.Retrofit;
 
 /**
  * Created by Cesar on 16/01/2016.
+ *
+ * Fragmento que controla la vita de Detalles del Pokemon
  */
 public class PokemonDetailFragment extends Fragment {
 
@@ -67,6 +69,11 @@ public class PokemonDetailFragment extends Fragment {
         return viewRoot;
     }
 
+    /**
+     * Verifica que haya conexión a internet antes de solicitar los detalles
+     * del Pokemon al servidor
+     * @param resourceUri recurso para obtener los datos
+     */
     private void attemptGetPokemon(final String resourceUri) {
         showProgress(true);
 
@@ -84,6 +91,11 @@ public class PokemonDetailFragment extends Fragment {
         }
     }
 
+    /**
+     * Obtiene los datos del Pokemon seleccionado haciendo un llamado GET al api de
+     * pokeapi.co y encapsula los datos en el modelo Pokemon
+     * @param resourceUri recurso para obtener los datos
+     */
     private void getPokemon(String resourceUri) {
         PokemonServices pokemonService = RestClient.getRetrofit().create(PokemonServices.class);
         Call<Pokemon> call = pokemonService.getPokemon(resourceUri);
@@ -104,6 +116,11 @@ public class PokemonDetailFragment extends Fragment {
         });
     }
 
+    /**
+     * Obtiene los datos del Sprite del Pokemon haciendo un llamado GET al api de
+     * pokeapi.co y encapsula los datos en el modelo Sprite
+     * @param pokemon info del Pokemon
+     */
     private void getSprites(final Pokemon pokemon) {
         PokemonServices pokemonService = RestClient.getRetrofit().create(PokemonServices.class);
         Call<Pokemon.Sprite> call = pokemonService
@@ -127,6 +144,10 @@ public class PokemonDetailFragment extends Fragment {
         });
     }
 
+    /**
+     * actualiza la vista una vez obentidos los datos del Pokemon
+     * @param pokemon Info del Pokemon
+     */
     private void updateView(Pokemon pokemon) {
         showProgress(false);
 

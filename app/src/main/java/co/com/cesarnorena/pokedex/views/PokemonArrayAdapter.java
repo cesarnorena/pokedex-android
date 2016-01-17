@@ -1,13 +1,10 @@
 package co.com.cesarnorena.pokedex.views;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import co.com.cesarnorena.pokedex.R;
@@ -15,6 +12,9 @@ import co.com.cesarnorena.pokedex.models.Pokemon;
 
 /**
  * Created by Cesar on 16/01/2016.
+ *
+ * ArrayAdapter personalizado para la creacion de cada item de la
+ * lista de pokemones
  */
 public class PokemonArrayAdapter extends ArrayAdapter<Pokemon> {
 
@@ -23,7 +23,7 @@ public class PokemonArrayAdapter extends ArrayAdapter<Pokemon> {
 
     public PokemonArrayAdapter(Context context, int resource) {
         super(context, resource);
-        this.context= context;
+        this.context = context;
         this.resource = resource;
     }
 

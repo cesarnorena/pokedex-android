@@ -8,8 +8,15 @@ import retrofit.Retrofit;
  */
 public class RestClient {
 
+    /**
+     * API Host
+     */
     public static final String BASE_URL = "http://pokeapi.co/";
 
+    /**
+     *
+     * @return Retorna una instancia del Singleton de Picasso
+     */
     static public Retrofit getRetrofit() {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

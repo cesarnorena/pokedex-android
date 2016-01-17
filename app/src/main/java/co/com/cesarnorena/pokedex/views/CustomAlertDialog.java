@@ -9,6 +9,10 @@ import co.com.cesarnorena.pokedex.R;
 
 import static android.support.v7.app.AlertDialog.Builder;
 
+/**
+ * Clase que facilita el uso de Alert Dialogs segun el contenido necesario y un
+ * listener para detectar cuando se ha cerrado el Dialog
+ */
 public class CustomAlertDialog extends DialogFragment {
 
     private static final String TITLE_ID = "title";

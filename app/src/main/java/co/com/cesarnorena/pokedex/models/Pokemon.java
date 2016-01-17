@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Created by Cesar on 16/01/2016.
+ * Modelo encargado de manejar la los datos relacionados a un Pokemon y creado
+ * segun los parametros obtenidos de PokeApi.co
  */
 public class Pokemon {
 
@@ -69,6 +71,9 @@ public class Pokemon {
         this.sprites = sprites;
     }
 
+    /**
+     * Modelo para manejar los Sprites correspondientes de cada Pokemon
+     */
     public class Sprite {
         @SerializedName("resource_uri")
         private String resourceUtl;
@@ -89,7 +94,7 @@ public class Pokemon {
             return resourceUtl;
         }
 
-        public String   getImageUrl() {
+        public String getImageUrl() {
             return imageUrl;
         }
     }

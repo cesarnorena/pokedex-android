@@ -11,6 +11,8 @@ import co.com.cesarnorena.pokedex.R;
 
 /**
  * Created by Cesar on 16/01/2016.
+ *
+ * Actividad principal encargada de manejar los Framegntos asociados a la aplicacion
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         initFragment();
     }
 
+    /**
+     * Inicializa el Fragmento inicial
+     */
     private void initFragment() {
         fragment = new PokemonListFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -32,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    /**
+     * Reemplaza un fragmento por otro
+     * @param newFragment Nuevo Fragmento
+     * @param newTag Nuevo Tag
+     * @param addToBackStack True si quiere que queda en el backstack
+     */
     public void replaceFragment(Fragment newFragment, String newTag, boolean addToBackStack) {
         String tag = fragment.getTag();
         fragment = newFragment;
@@ -43,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    /**
+     * Reemplaza un Fragmento por otro agregando argumentos a traves de un Bundle
+     * @param newFragment Nuevo Fragmento
+     * @param newTag Nuevo Tag
+     * @param addToBackStack True si quiere que queda en el backstack
+     * @param args Bundle con la info
+     */
     public void replaceFragment(Fragment newFragment, String newTag, boolean addToBackStack, Bundle args) {
         newFragment.setArguments(args);
         replaceFragment(newFragment, newTag, addToBackStack);

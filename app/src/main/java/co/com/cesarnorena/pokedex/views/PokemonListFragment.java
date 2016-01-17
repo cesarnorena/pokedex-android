@@ -24,6 +24,8 @@ import retrofit.Retrofit;
 
 /**
  * Created by diana on 16/01/2016.
+ *
+ * Fragmento que controla la vista Lista de Pokemones
  */
 public class PokemonListFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -61,6 +63,10 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
         return viewRoot;
     }
 
+    /**
+     * Verifica que haya conexión a internet antes de solicitar la lista
+     * de Pokemones al servidor
+     */
     private void attemptGetPokemonList() {
         showProgress(true);
 
@@ -78,6 +84,10 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
         }
     }
 
+    /**
+     * Obtiene la lista completa de Pokemones haciendo un llamado GET al api de
+     * pokeapi.co y encapsula los datos en el modelo PokemonList
+     */
     private void getPokemonList() {
         PokemonServices pokemonService = RestClient.getRetrofit().create(PokemonServices.class);
 
