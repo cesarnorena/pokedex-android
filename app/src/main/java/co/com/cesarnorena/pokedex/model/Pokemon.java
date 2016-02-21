@@ -1,4 +1,4 @@
-package co.com.cesarnorena.pokedex.models;
+package co.com.cesarnorena.pokedex.model;
 
 import com.google.gson.annotations.SerializedName;
 

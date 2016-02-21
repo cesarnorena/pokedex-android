@@ -1,4 +1,4 @@
-package co.com.cesarnorena.pokedex.restServices;
+package co.com.cesarnorena.pokedex.restService;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;

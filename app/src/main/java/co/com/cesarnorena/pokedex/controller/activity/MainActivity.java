@@ -1,6 +1,5 @@
-package co.com.cesarnorena.pokedex.views;
+package co.com.cesarnorena.pokedex.controller.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import co.com.cesarnorena.pokedex.R;
+import co.com.cesarnorena.pokedex.controller.PokemonListFragment;
 
 /**
  * Created by Cesar on 16/01/2016.

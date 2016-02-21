@@ -1,4 +1,4 @@
-package co.com.cesarnorena.pokedex.views;
+package co.com.cesarnorena.pokedex.controller;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

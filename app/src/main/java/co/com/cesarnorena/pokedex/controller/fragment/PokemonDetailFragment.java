@@ -1,10 +1,9 @@
-package co.com.cesarnorena.pokedex.views;
+package co.com.cesarnorena.pokedex.controller.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,9 +17,11 @@ import com.squareup.picasso.Picasso;
 
 import co.com.cesarnorena.pokedex.MyApplication;
 import co.com.cesarnorena.pokedex.R;
-import co.com.cesarnorena.pokedex.models.Pokemon;
-import co.com.cesarnorena.pokedex.restServices.PokemonServices;
-import co.com.cesarnorena.pokedex.restServices.RestClient;
+import co.com.cesarnorena.pokedex.controller.CustomAlertDialog;
+import co.com.cesarnorena.pokedex.controller.activity.MainActivity;
+import co.com.cesarnorena.pokedex.model.Pokemon;
+import co.com.cesarnorena.pokedex.restService.PokemonServices;
+import co.com.cesarnorena.pokedex.restService.RestClient;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;

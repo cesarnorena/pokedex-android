@@ -1,12 +1,9 @@
-package co.com.cesarnorena.pokedex.restServices;
+package co.com.cesarnorena.pokedex.restService;
 
-import java.util.List;
-
-import co.com.cesarnorena.pokedex.models.Pokemon;
-import co.com.cesarnorena.pokedex.models.PokemonList;
+import co.com.cesarnorena.pokedex.model.Pokemon;
+import co.com.cesarnorena.pokedex.model.PokemonList;
 import retrofit.Call;
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Url;
 
 /**

@@ -1,4 +1,4 @@
-package co.com.cesarnorena.pokedex.models;
+package co.com.cesarnorena.pokedex.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Cesar on 16/01/2016.
  */
-public class PokemonList {
+public class Pokedex {
 
     /*
     {
@@ -35,7 +35,7 @@ public class PokemonList {
     @SerializedName("pokemon")
     private List<Pokemon> pokemons;
 
-    public PokemonList(String createdAt, String updatedAt, String name, List<Pokemon> pokemons) {
+    public Pokedex(String createdAt, String updatedAt, String name, List<Pokemon> pokemons) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.name = name;
