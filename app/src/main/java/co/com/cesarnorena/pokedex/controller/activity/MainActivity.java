@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import co.com.cesarnorena.pokedex.R;
-import co.com.cesarnorena.pokedex.controller.PokemonListFragment;
+import co.com.cesarnorena.pokedex.controller.fragment.PokemonListFragment;
 
 /**
  * Created by Cesar on 16/01/2016.

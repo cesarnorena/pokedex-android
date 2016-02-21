@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import co.com.cesarnorena.pokedex.R;
-import co.com.cesarnorena.pokedex.model.Pokemon;
+import co.com.cesarnorena.pokedex.model.Pokedex;
 
 /**
  * Created by Cesar on 16/01/2016.
@@ -16,7 +16,7 @@ import co.com.cesarnorena.pokedex.model.Pokemon;
  * ArrayAdapter personalizado para la creacion de cada item de la
  * lista de pokemones
  */
-public class PokedexArrayAdapter extends ArrayAdapter<Pokemon> {
+public class PokedexArrayAdapter extends ArrayAdapter<Pokedex.PokedexEntry> {
 
     private Context context;
     private int resource;
@@ -44,8 +44,8 @@ public class PokedexArrayAdapter extends ArrayAdapter<Pokemon> {
             holder = (PokemonHolder) row.getTag();
         }
 
-        Pokemon pokemon = getItem(position);
-        holder.nameV.setText(pokemon.getName());
+        Pokedex.PokedexEntry pokemon = getItem(position);
+        holder.nameV.setText(pokemon.getSpecie().getName());
 
         return row;
     }

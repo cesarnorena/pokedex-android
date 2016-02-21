@@ -22,14 +22,14 @@ import co.com.cesarnorena.pokedex.controller.activity.MainActivity;
 import co.com.cesarnorena.pokedex.model.Pokemon;
 import co.com.cesarnorena.pokedex.restService.PokemonServices;
 import co.com.cesarnorena.pokedex.restService.RestClient;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by Cesar on 16/01/2016.
- *
+ * <p/>
  * Fragmento que controla la vita de Detalles del Pokemon
  */
 public class PokemonDetailFragment extends Fragment {
@@ -73,6 +73,7 @@ public class PokemonDetailFragment extends Fragment {
     /**
      * Verifica que haya conexión a internet antes de solicitar los detalles
      * del Pokemon al servidor
+     *
      * @param resourceUri recurso para obtener los datos
      */
     private void attemptGetPokemon(final String resourceUri) {
@@ -95,6 +96,7 @@ public class PokemonDetailFragment extends Fragment {
     /**
      * Obtiene los datos del Pokemon seleccionado haciendo un llamado GET al api de
      * pokeapi.co y encapsula los datos en el modelo Pokemon
+     *
      * @param resourceUri recurso para obtener los datos
      */
     private void getPokemon(String resourceUri) {
@@ -103,15 +105,17 @@ public class PokemonDetailFragment extends Fragment {
 
         call.enqueue(new Callback<Pokemon>() {
             @Override
-            public void onResponse(Response<Pokemon> response, Retrofit retrofit) {
+            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                 if (isAdded()) {
                     Pokemon pokemon = response.body();
-                    getSprites(pokemon);
+                    //getSprites(pokemon);
+
+                    updateView(pokemon);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Pokemon> call, Throwable t) {
                 Log.e(getTag(), "onFailure() called with: " + "t = [" + t + "]");
             }
         });
@@ -120,6 +124,7 @@ public class PokemonDetailFragment extends Fragment {
     /**
      * Obtiene los datos del Sprite del Pokemon haciendo un llamado GET al api de
      * pokeapi.co y encapsula los datos en el modelo Sprite
+     *
      * @param pokemon info del Pokemon
      */
     private void getSprites(final Pokemon pokemon) {
@@ -129,17 +134,17 @@ public class PokemonDetailFragment extends Fragment {
 
         call.enqueue(new Callback<Pokemon.Sprite>() {
             @Override
-            public void onResponse(Response<Pokemon.Sprite> response, Retrofit retrofit) {
+            public void onResponse(Call<Pokemon.Sprite> call, Response<Pokemon.Sprite> response) {
                 if (isAdded()) {
                     Pokemon.Sprite sprite = response.body();
-                    pokemon.setImageUrl(sprite.getImageUrl());
+                    //pokemon.setImageUrl(sprite.getImageUrl());
 
                     updateView(pokemon);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Pokemon.Sprite> call, Throwable t) {
                 Log.e(getTag(), "onFailure() called with: " + "t = [" + t + "]");
             }
         });
@@ -147,6 +152,7 @@ public class PokemonDetailFragment extends Fragment {
 
     /**
      * actualiza la vista una vez obentidos los datos del Pokemon
+     *
      * @param pokemon Info del Pokemon
      */
     private void updateView(Pokemon pokemon) {
@@ -159,14 +165,14 @@ public class PokemonDetailFragment extends Fragment {
         nameV.setText(String.format(getString(R.string.pokemon_name), pokemon.getName()));
 
         nationalIdV.setText(String.format(getString(R.string.pokemon_national_id),
-                String.valueOf(pokemon.getNationalId())));
+                String.valueOf(pokemon.getId())));
 
-        if (pokemon.getGender() != null)
+        /*if (pokemon.getGender() != null)
             genderV.setText(String.format(getString(R.string.pokemon_gender),
                     pokemon.getGender()));
         else
             genderV.setText(String.format(getString(R.string.pokemon_gender),
-                    "M / F"));
+                    "M / F"));*/
     }
 
     @Override

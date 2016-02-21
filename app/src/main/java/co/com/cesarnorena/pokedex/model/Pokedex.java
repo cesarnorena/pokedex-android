@@ -5,56 +5,76 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by Cesar on 16/01/2016.
+ * Created by Cesar Norena on 16/01/2016.
  */
 public class Pokedex {
 
-    /*
-    {
-        "created": "2013-11-09T15:14:48.957604",
-        "modified": "2013-11-09T15:14:48.957565",
-        "name": "national",
-        "pokemon": [
-        {
-          "name": "pidgeotto",
-          "resource_uri": "api/v1/pokemon/17/"
-        },
-        ...
-        ]
-     }
-     */
+    @SerializedName("id")
+    private int id;
 
-    @SerializedName("created")
-    private String createdAt;
-
-    @SerializedName("modified")
-    private String updatedAt;
-
+    @SerializedName("name")
     private String name;
 
-    @SerializedName("pokemon")
-    private List<Pokemon> pokemons;
+    @SerializedName("pokemon_entries")
+    private List<PokedexEntry> pokedexEntries;
 
-    public Pokedex(String createdAt, String updatedAt, String name, List<Pokemon> pokemons) {
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public Pokedex(int id, String name, List<PokedexEntry> pokemons) {
+        this.id = id;
         this.name = name;
-        this.pokemons = pokemons;
+        this.pokedexEntries = pokemons;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Pokemon> getPokemons() {
-        return pokemons;
+    public List<PokedexEntry> getPokedexEntries() {
+        return pokedexEntries;
+    }
+
+    public class PokedexEntry {
+        @SerializedName("entry_number")
+        private int number;
+
+        @SerializedName("pokemon_species")
+        private Specie specie;
+
+        public PokedexEntry(int number, Specie specie) {
+            this.number = number;
+            this.specie = specie;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public Specie getSpecie() {
+            return specie;
+        }
+    }
+
+    public class Specie {
+        @SerializedName("name")
+        private String name;
+
+        @SerializedName("url")
+        private String url;
+
+        public Specie(String name, String url) {
+            this.name = name;
+            this.url = url;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getUrl() {
+            return url;
+        }
     }
 }

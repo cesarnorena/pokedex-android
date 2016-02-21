@@ -1,17 +1,18 @@
 package co.com.cesarnorena.pokedex.restService;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Cesar on 16/01/2016.
+ * Created by Cesar Norena on 16/01/2016.
  */
 public class RestClient {
 
     /**
      * API Host
      */
-    public static final String BASE_URL = "http://pokeapi.co/";
+    //public static final String BASE_URL = "http://pokeapi.co/api/v1/";
+    public static final String BASE_URL = "http://pokeapi.co/api/v2/";
 
     /**
      *

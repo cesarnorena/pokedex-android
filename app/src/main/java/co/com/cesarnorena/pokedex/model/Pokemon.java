@@ -11,32 +11,29 @@ import java.util.List;
  */
 public class Pokemon {
 
+    @SerializedName("id")
+    private int id;
+
+    @SerializedName("name")
     private String name;
 
     @SerializedName("resource_uri")
     private String resourceUri;
 
-    @SerializedName("national_id")
-    private int nationalId;
-
-    @SerializedName("male_femal_ratio ")
-    private String gender;
-
     private List<Sprite> sprites;
 
     private String imageUrl;
 
-    public Pokemon(String name, String resourceUri, int nationalId, String gender, List<Sprite> sprites) {
+    public Pokemon(int id, String name, String resourceUri, List<Sprite> sprites, String imageUrl) {
+        this.id = id;
         this.name = name;
         this.resourceUri = resourceUri;
-        this.nationalId = nationalId;
-        this.gender = gender;
         this.sprites = sprites;
+        this.imageUrl = imageUrl;
     }
 
-    public Pokemon(String name, String resourceUri) {
-        this.name = name;
-        this.resourceUri = resourceUri;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -47,29 +44,15 @@ public class Pokemon {
         return resourceUri;
     }
 
-    public int getNationalId() {
-        return nationalId;
-    }
-
-    public String getGender() {
-        return gender;
+    public List<Sprite> getSprites() {
+        return sprites;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public List<Sprite> getSprites() {
-        return sprites;
-    }
-
-    public void setSprites(List<Sprite> sprites) {
-        this.sprites = sprites;
-    }
+    //---------------------------------------------------------------------
 
     /**
      * Modelo para manejar los Sprites correspondientes de cada Pokemon
