@@ -2,10 +2,8 @@ package co.com.cesarnorena.pokedex.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**
- * Created by Cesar on 16/01/2016.
+ * Created by Cesar Norena on 16/01/2016.
  * Modelo encargado de manejar la los datos relacionados a un Pokemon y creado
  * segun los parametros obtenidos de PokeApi.co
  */
@@ -20,15 +18,12 @@ public class Pokemon {
     @SerializedName("resource_uri")
     private String resourceUri;
 
-    private List<Sprite> sprites;
-
     private String imageUrl;
 
-    public Pokemon(int id, String name, String resourceUri, List<Sprite> sprites, String imageUrl) {
+    public Pokemon(int id, String name, String resourceUri, String imageUrl) {
         this.id = id;
         this.name = name;
         this.resourceUri = resourceUri;
-        this.sprites = sprites;
         this.imageUrl = imageUrl;
     }
 
@@ -40,16 +35,25 @@ public class Pokemon {
         return name;
     }
 
-    public String getResourceUri() {
-        return resourceUri;
-    }
-
-    public List<Sprite> getSprites() {
-        return sprites;
-    }
-
     public String getImageUrl() {
+        if (imageUrl == null)
+            this.imageUrl = "http://assets.pokemon.com/assets/cms2/img/pokedex/detail/"
+                    + getStringId() + ".png";
+
         return imageUrl;
+    }
+
+    private String getStringId() {
+        String formattedId;
+
+        if (id < 10)
+            formattedId = "00" + id;
+        else if (id < 100)
+            formattedId = "0" + id;
+        else
+            formattedId = String.valueOf(id);
+
+        return formattedId;
     }
 
     //---------------------------------------------------------------------

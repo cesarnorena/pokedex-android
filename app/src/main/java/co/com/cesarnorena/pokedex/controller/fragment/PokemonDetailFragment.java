@@ -100,6 +100,8 @@ public class PokemonDetailFragment extends Fragment {
      * @param resourceUri recurso para obtener los datos
      */
     private void getPokemon(String resourceUri) {
+        showProgress(true);
+
         PokemonServices pokemonService = RestClient.getRetrofit().create(PokemonServices.class);
         Call<Pokemon> call = pokemonService.getPokemon(resourceUri);
 
@@ -110,6 +112,7 @@ public class PokemonDetailFragment extends Fragment {
                     Pokemon pokemon = response.body();
                     //getSprites(pokemon);
 
+                    showProgress(false);
                     updateView(pokemon);
                 }
             }
@@ -117,35 +120,8 @@ public class PokemonDetailFragment extends Fragment {
             @Override
             public void onFailure(Call<Pokemon> call, Throwable t) {
                 Log.e(getTag(), "onFailure() called with: " + "t = [" + t + "]");
-            }
-        });
-    }
-
-    /**
-     * Obtiene los datos del Sprite del Pokemon haciendo un llamado GET al api de
-     * pokeapi.co y encapsula los datos en el modelo Sprite
-     *
-     * @param pokemon info del Pokemon
-     */
-    private void getSprites(final Pokemon pokemon) {
-        PokemonServices pokemonService = RestClient.getRetrofit().create(PokemonServices.class);
-        Call<Pokemon.Sprite> call = pokemonService
-                .getSprite(pokemon.getSprites().get(0).getResourceUtl());
-
-        call.enqueue(new Callback<Pokemon.Sprite>() {
-            @Override
-            public void onResponse(Call<Pokemon.Sprite> call, Response<Pokemon.Sprite> response) {
-                if (isAdded()) {
-                    Pokemon.Sprite sprite = response.body();
-                    //pokemon.setImageUrl(sprite.getImageUrl());
-
-                    updateView(pokemon);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Pokemon.Sprite> call, Throwable t) {
-                Log.e(getTag(), "onFailure() called with: " + "t = [" + t + "]");
+                if (isAdded())
+                    showProgress(false);
             }
         });
     }
@@ -159,7 +135,7 @@ public class PokemonDetailFragment extends Fragment {
         showProgress(false);
 
         Picasso.with(ctx)
-                .load(RestClient.BASE_URL + pokemon.getImageUrl())
+                .load(pokemon.getImageUrl())
                 .into(imageV);
 
         nameV.setText(String.format(getString(R.string.pokemon_name), pokemon.getName()));
