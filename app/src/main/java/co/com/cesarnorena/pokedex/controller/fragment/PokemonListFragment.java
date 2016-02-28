@@ -1,6 +1,5 @@
 package co.com.cesarnorena.pokedex.controller.fragment;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,9 +13,9 @@ import android.widget.ListView;
 
 import co.com.cesarnorena.pokedex.MyApplication;
 import co.com.cesarnorena.pokedex.R;
-import co.com.cesarnorena.pokedex.controller.CustomAlertDialog;
-import co.com.cesarnorena.pokedex.controller.adapter.PokedexArrayAdapter;
 import co.com.cesarnorena.pokedex.controller.activity.MainActivity;
+import co.com.cesarnorena.pokedex.controller.adapter.PokedexArrayAdapter;
+import co.com.cesarnorena.pokedex.controller.dialog.CustomAlertDialog;
 import co.com.cesarnorena.pokedex.model.Pokedex;
 import co.com.cesarnorena.pokedex.restService.PokedexServices;
 import co.com.cesarnorena.pokedex.restService.RestClient;
@@ -25,22 +24,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by diana on 16/01/2016.
- *
- * Fragmento que controla la vista Lista de Pokemones
+ * Created by Cesar Norena on 16/01/2016.
  */
-public class PokemonListFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class PokemonListFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
-    private Context ctx;
+    private Context context;
+
     private PokedexArrayAdapter adapter;
     private ListView pokemonListV;
-    private View progress;
+    private View progressV;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View viewRoot = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
-        ctx = getActivity().getApplicationContext();
+        context = getActivity().getApplicationContext();
 
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -48,13 +46,13 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
 
-        progress = viewRoot.findViewById(R.id.pokemon_list_progress);
+        progressV = viewRoot.findViewById(R.id.pokemon_list_progress);
 
         pokemonListV = (ListView) viewRoot.findViewById(R.id.pokemon_list_listview);
         pokemonListV.setOnItemClickListener(this);
 
         if (adapter == null || adapter.getCount() == 0) {
-            adapter = new PokedexArrayAdapter(ctx, R.layout.row_pokemon_list);
+            adapter = new PokedexArrayAdapter(context, R.layout.row_pokemon_list);
             attemptGetPokemonList();
 
         } else {
@@ -65,36 +63,31 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
         return viewRoot;
     }
 
-    /**
-     * Verifica que haya conexión a internet antes de solicitar la lista
-     * de Pokemones al servidor
-     */
     private void attemptGetPokemonList() {
         showProgress(true);
 
-        if (MyApplication.isConnected(ctx))
+        if (MyApplication.isConnected(context))
             getPokemonList();
         else {
             showProgress(false);
 
-            CustomAlertDialog.create(getString(R.string.alert_no_connection), new CustomAlertDialog.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    attemptGetPokemonList();
-                }
-            }).show(getFragmentManager(), null);
+            CustomAlertDialog.create(
+                    getString(R.string.alert_title_remeber),
+                    getString(R.string.alert_no_connection),
+                    getString(R.string.alert_accept),
+                    new CustomAlertDialog.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            attemptGetPokemonList();
+                        }
+                    }).show(getFragmentManager(), null);
         }
     }
 
-    /**
-     * Obtiene la lista completa de Pokemones haciendo un llamado GET al api de
-     * pokeapi.co y encapsula los datos en el modelo Pokedex
-     */
     private void getPokemonList() {
         PokedexServices pokemonService = RestClient.getRetrofit().create(PokedexServices.class);
 
         Call<Pokedex> call = pokemonService.getPokedex();
-
         call.enqueue(new Callback<Pokedex>() {
             @Override
             public void onResponse(Call<Pokedex> call, Response<Pokedex> response) {
@@ -102,14 +95,29 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
                     Pokedex pokemons = response.body();
 
                     adapter.addAll(pokemons.getPokedexEntries());
-                    showProgress(false);
                     pokemonListV.setAdapter(adapter);
+
+                    showProgress(false);
                 }
             }
 
             @Override
             public void onFailure(Call<Pokedex> call, Throwable t) {
-                Log.e(getTag(), "onFailure() called with: " + "t = [" + t + "]");
+                Log.e(getTag(), "onFailure() " + t);
+
+                if (isVisible()) {
+                    showProgress(false);
+                    CustomAlertDialog.create(
+                            getString(R.string.alert_title),
+                            getString(R.string.alert_server_error),
+                            getString(R.string.alert_accept),
+                            new CustomAlertDialog.OnDismissListener() {
+                                @Override
+                                public void onDismiss() {
+                                    attemptGetPokemonList();
+                                }
+                            }).show(getFragmentManager(), null);
+                }
             }
         });
     }
@@ -118,7 +126,7 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
         if (isVisible()) {
             Bundle args = new Bundle();
-            args.putString("resourceUri", adapter.getItem(pos).getSpecie().getUrl());
+            args.putString("resourceUrl", adapter.getItem(pos).getSpecie().getUrl());
 
             MainActivity main = (MainActivity) getActivity();
             main.replaceFragment(new PokemonDetailFragment(), PokemonDetailFragment.class.getSimpleName(), true, args);
@@ -126,6 +134,6 @@ public class PokemonListFragment extends Fragment implements AdapterView.OnItemC
     }
 
     private void showProgress(boolean isVisible) {
-        progress.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressV.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }

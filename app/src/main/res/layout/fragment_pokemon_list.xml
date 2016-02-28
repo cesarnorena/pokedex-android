@@ -2,14 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:paddingBottom="@dimen/minimal_spacing"
+    android:paddingTop="@dimen/minimal_spacing"
+    android:background="@color/light_gray"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <ListView
+        android:dividerHeight="@dimen/activity_vertical_margin"
+        android:divider="@android:color/transparent"
         android:id="@+id/pokemon_list_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <ProgressBar
+        android:visibility="visible"
         android:id="@+id/pokemon_list_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

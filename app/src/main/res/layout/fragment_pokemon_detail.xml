@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:background="@color/white"
+        android:layout_centerInParent="true"
         android:layout_margin="@dimen/minimal_spacing">
 
         <LinearLayout
@@ -19,41 +18,36 @@
 
             <ImageView
                 android:id="@+id/pokemon_detail_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/detail_image"
+                android:layout_height="@dimen/detail_image"
+                android:layout_marginBottom="@dimen/minimal_spacing"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/content_description"
                 android:scaleType="centerInside" />
-
-            <TextView
-                android:id="@+id/pokemon_detail_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/minimal_spacing"
-                android:textColor="@color/textColor"
-                android:textSize="22sp" />
-
-            <TextView
-                android:id="@+id/pokemon_detail_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:textColor="@color/textColor"
-                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/pokemon_detail_national_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_large" />
+
+            <TextView
+                android:id="@+id/pokemon_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_xlarge" />
+
         </LinearLayout>
+
+        <ProgressBar
+            android:visibility="visible"
+            android:id="@+id/pokemon_detail_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
     </android.support.v7.widget.CardView>
 
-    <ProgressBar
-        android:id="@+id/pokemon_detail_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
 
 </RelativeLayout>

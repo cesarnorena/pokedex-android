@@ -5,16 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import co.com.cesarnorena.pokedex.R;
 import co.com.cesarnorena.pokedex.model.Pokedex;
+import co.com.cesarnorena.pokedex.model.Pokemon;
 
 /**
- * Created by Cesar on 16/01/2016.
- *
- * ArrayAdapter personalizado para la creacion de cada item de la
- * lista de pokemones
+ * Created by Cesar Norena on 16/01/2016.
  */
 public class PokedexArrayAdapter extends ArrayAdapter<Pokedex.PokedexEntry> {
 
@@ -37,7 +38,9 @@ public class PokedexArrayAdapter extends ArrayAdapter<Pokedex.PokedexEntry> {
             row = inflater.inflate(resource, parent, false);
 
             holder = new PokemonHolder();
-            holder.nameV = (TextView) row.findViewById(R.id.pokemonitem_name);
+            holder.imageV = (ImageView) row.findViewById(R.id.pokemon_row_image);
+            holder.numberV = (TextView) row.findViewById(R.id.pokemon_row_number);
+            holder.nameV = (TextView) row.findViewById(R.id.pokemon_row_name);
 
             row.setTag(holder);
         } else {
@@ -45,12 +48,25 @@ public class PokedexArrayAdapter extends ArrayAdapter<Pokedex.PokedexEntry> {
         }
 
         Pokedex.PokedexEntry pokemon = getItem(position);
-        holder.nameV.setText(pokemon.getSpecie().getName());
+
+        int size = (int) context.getResources().getDimension(R.dimen.row_image);
+        Picasso.with(context)
+                .load(pokemon.getImageUrl())
+                .resize(size, size)
+                .into(holder.imageV);
+
+        holder.numberV.setText(String.format(context.getString(R.string.pokemon_national_id),
+                Pokemon.getFormattedId(pokemon.getNumber())));
+
+        String name = pokemon.getSpecie().getName();
+        holder.nameV.setText(name.substring(0, 1).toUpperCase() + name.substring(1));
 
         return row;
     }
 
     private class PokemonHolder {
+        ImageView imageV;
+        TextView numberV;
         TextView nameV;
     }
 }

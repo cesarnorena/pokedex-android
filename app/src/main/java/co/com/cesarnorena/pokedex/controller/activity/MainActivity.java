@@ -1,8 +1,8 @@
 package co.com.cesarnorena.pokedex.controller.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,9 +10,7 @@ import co.com.cesarnorena.pokedex.R;
 import co.com.cesarnorena.pokedex.controller.fragment.PokemonListFragment;
 
 /**
- * Created by Cesar on 16/01/2016.
- *
- * Actividad principal encargada de manejar los Framegntos asociados a la aplicacion
+ * Created by Cesar Norena on 16/01/2016.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -26,41 +24,25 @@ public class MainActivity extends AppCompatActivity {
         initFragment();
     }
 
-    /**
-     * Inicializa el Fragmento inicial
-     */
     private void initFragment() {
         fragment = new PokemonListFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_main_container, fragment,
                 PokemonListFragment.class.getSimpleName());
         transaction.commit();
     }
 
-    /**
-     * Reemplaza un fragmento por otro
-     * @param newFragment Nuevo Fragmento
-     * @param newTag Nuevo Tag
-     * @param addToBackStack True si quiere que queda en el backstack
-     */
     public void replaceFragment(Fragment newFragment, String newTag, boolean addToBackStack) {
         String tag = fragment.getTag();
         fragment = newFragment;
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_main_container, newFragment, newTag);
         if (addToBackStack)
             transaction.addToBackStack(tag);
         transaction.commit();
     }
 
-    /**
-     * Reemplaza un Fragmento por otro agregando argumentos a traves de un Bundle
-     * @param newFragment Nuevo Fragmento
-     * @param newTag Nuevo Tag
-     * @param addToBackStack True si quiere que queda en el backstack
-     * @param args Bundle con la info
-     */
     public void replaceFragment(Fragment newFragment, String newTag, boolean addToBackStack, Bundle args) {
         newFragment.setArguments(args);
         replaceFragment(newFragment, newTag, addToBackStack);
@@ -68,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        FragmentManager manager = getFragmentManager();
+        FragmentManager manager = getSupportFragmentManager();
         int backStackCount = manager.getBackStackEntryCount();
 
         if (backStackCount > 0) {

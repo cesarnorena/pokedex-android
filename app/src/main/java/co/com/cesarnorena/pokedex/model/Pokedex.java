@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Created by Cesar Norena on 16/01/2016.
+ *
  */
 public class Pokedex {
 
@@ -43,6 +44,8 @@ public class Pokedex {
         @SerializedName("pokemon_species")
         private Specie specie;
 
+        private String imageUrl;
+
         public PokedexEntry(int number, Specie specie) {
             this.number = number;
             this.specie = specie;
@@ -54,6 +57,14 @@ public class Pokedex {
 
         public Specie getSpecie() {
             return specie;
+        }
+
+        public String getImageUrl() {
+            if (imageUrl == null)
+                this.imageUrl = "http://assets.pokemon.com/assets/cms2/img/pokedex/detail/"
+                        + Pokemon.getFormattedId(number) + ".png";
+
+            return imageUrl;
         }
     }
 
