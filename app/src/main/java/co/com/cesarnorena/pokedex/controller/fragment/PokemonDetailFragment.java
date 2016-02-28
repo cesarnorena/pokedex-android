@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -55,7 +54,7 @@ public class PokemonDetailFragment extends BaseFragment {
         progressV = viewRoot.findViewById(R.id.pokemon_detail_progress);
         imageV = (ImageView) viewRoot.findViewById(R.id.pokemon_detail_image);
         nameV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_name);
-        nationalIdV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_national_id);
+        nationalIdV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_number);
 
         if (args != null) {
             String resourceUri = args.getString("resourceUrl", null);
