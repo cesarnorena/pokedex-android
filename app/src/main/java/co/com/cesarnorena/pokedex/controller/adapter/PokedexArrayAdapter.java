@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import co.com.cesarnorena.pokedex.R;
 import co.com.cesarnorena.pokedex.model.Pokedex;
 import co.com.cesarnorena.pokedex.model.Pokemon;
@@ -36,22 +38,18 @@ public class PokedexArrayAdapter extends ArrayAdapter<Pokedex.PokedexEntry> {
         if (row == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             row = inflater.inflate(resource, parent, false);
-
-            holder = new PokemonHolder();
-            holder.imageV = (ImageView) row.findViewById(R.id.pokemon_row_image);
-            holder.numberV = (TextView) row.findViewById(R.id.pokemon_row_number);
-            holder.nameV = (TextView) row.findViewById(R.id.pokemon_row_name);
+            holder = new PokemonHolder(row);
 
             row.setTag(holder);
-        } else {
+        } else
             holder = (PokemonHolder) row.getTag();
-        }
 
         Pokedex.PokedexEntry pokemon = getItem(position);
+        String imageUrl= pokemon.getImageUrl();
 
         int size = (int) context.getResources().getDimension(R.dimen.row_image);
         Picasso.with(context)
-                .load(pokemon.getImageUrl())
+                .load(imageUrl)
                 .resize(size, size)
                 .into(holder.imageV);
 
@@ -64,9 +62,18 @@ public class PokedexArrayAdapter extends ArrayAdapter<Pokedex.PokedexEntry> {
         return row;
     }
 
-    private class PokemonHolder {
+    public class PokemonHolder {
+        @Bind(R.id.pokemon_row_image)
         ImageView imageV;
+
+        @Bind(R.id.pokemon_row_number)
         TextView numberV;
+
+        @Bind(R.id.pokemon_row_name)
         TextView nameV;
+
+        public PokemonHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

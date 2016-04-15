@@ -1,4 +1,4 @@
-package co.com.cesarnorena.pokedex.restService;
+package co.com.cesarnorena.pokedex.restservice;
 
 import co.com.cesarnorena.pokedex.model.Pokemon;
 import retrofit2.Call;

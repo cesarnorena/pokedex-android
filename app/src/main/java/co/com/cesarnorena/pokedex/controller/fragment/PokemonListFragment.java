@@ -1,24 +1,31 @@
 package co.com.cesarnorena.pokedex.controller.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import co.com.cesarnorena.pokedex.MyApplication;
 import co.com.cesarnorena.pokedex.R;
 import co.com.cesarnorena.pokedex.controller.activity.MainActivity;
 import co.com.cesarnorena.pokedex.controller.adapter.PokedexArrayAdapter;
 import co.com.cesarnorena.pokedex.controller.dialog.CustomAlertDialog;
 import co.com.cesarnorena.pokedex.model.Pokedex;
-import co.com.cesarnorena.pokedex.restService.PokedexServices;
-import co.com.cesarnorena.pokedex.restService.RestClient;
+import co.com.cesarnorena.pokedex.restservice.PokedexServices;
+import co.com.cesarnorena.pokedex.restservice.RestClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,33 +33,30 @@ import retrofit2.Response;
 /**
  * Created by Cesar Norena on 16/01/2016.
  */
-public class PokemonListFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class PokemonListFragment extends BaseFragment {
 
-    private Context context;
+    @Bind(R.id.pokemon_list_listview)
+    ListView pokemonListV;
+
+    @Bind(R.id.pokemon_list_progress)
+    ProgressBar progressV;
 
     private PokedexArrayAdapter adapter;
-    private ListView pokemonListV;
-    private View progressV;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View viewRoot = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
-        context = getActivity().getApplicationContext();
+        View view = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
+        ButterKnife.bind(this, view);
 
-        android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             setHasOptionsMenu(false);
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
 
-        progressV = viewRoot.findViewById(R.id.pokemon_list_progress);
-
-        pokemonListV = (ListView) viewRoot.findViewById(R.id.pokemon_list_listview);
-        pokemonListV.setOnItemClickListener(this);
-
         if (adapter == null || adapter.getCount() == 0) {
-            adapter = new PokedexArrayAdapter(context, R.layout.row_pokemon_list);
+            adapter = new PokedexArrayAdapter(getActivity(), R.layout.row_pokemon_list);
             attemptGetPokemonList();
 
         } else {
@@ -60,27 +64,33 @@ public class PokemonListFragment extends BaseFragment implements AdapterView.OnI
             pokemonListV.setAdapter(adapter);
         }
 
-        return viewRoot;
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     private void attemptGetPokemonList() {
         showProgress(true);
 
-        if (MyApplication.isConnected(context))
+        if (MyApplication.isConnected(getActivity()))
             getPokemonList();
         else {
             showProgress(false);
 
-            CustomAlertDialog.create(
-                    getString(R.string.alert_title_remeber),
-                    getString(R.string.alert_no_connection),
-                    getString(R.string.alert_accept),
-                    new CustomAlertDialog.OnDismissListener() {
+            new MaterialDialog.Builder(getActivity())
+                    .title(R.string.alert_title_remeber)
+                    .content(R.string.alert_no_connection)
+                    .positiveText(R.string.alert_accept)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onDismiss() {
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             attemptGetPokemonList();
                         }
-                    }).show(getFragmentManager(), null);
+                    }).show();
         }
     }
 
@@ -92,9 +102,9 @@ public class PokemonListFragment extends BaseFragment implements AdapterView.OnI
             @Override
             public void onResponse(Call<Pokedex> call, Response<Pokedex> response) {
                 if (isAdded()) {
-                    Pokedex pokemons = response.body();
+                    Pokedex pokedex = response.body();
 
-                    adapter.addAll(pokemons.getPokedexEntries());
+                    adapter.addAll(pokedex.getPokedexEntries());
                     pokemonListV.setAdapter(adapter);
 
                     showProgress(false);
@@ -107,26 +117,27 @@ public class PokemonListFragment extends BaseFragment implements AdapterView.OnI
 
                 if (isVisible()) {
                     showProgress(false);
-                    CustomAlertDialog.create(
-                            getString(R.string.alert_title),
-                            getString(R.string.alert_server_error),
-                            getString(R.string.alert_accept),
-                            new CustomAlertDialog.OnDismissListener() {
+
+                    new MaterialDialog.Builder(getActivity())
+                            .title(R.string.alert_title)
+                            .content(R.string.alert_server_error)
+                            .positiveText(R.string.alert_accept)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
-                                public void onDismiss() {
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     attemptGetPokemonList();
                                 }
-                            }).show(getFragmentManager(), null);
+                            }).show();
                 }
             }
         });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+    @OnItemClick(R.id.pokemon_list_listview)
+    public void itemClick(int position) {
         if (isVisible()) {
             Bundle args = new Bundle();
-            args.putString("resourceUrl", adapter.getItem(pos).getSpecie().getUrl());
+            args.putString("resourceUrl", adapter.getItem(position).getSpecie().getUrl());
 
             MainActivity main = (MainActivity) getActivity();
             main.replaceFragment(new PokemonDetailFragment(), PokemonDetailFragment.class.getSimpleName(), true, args);

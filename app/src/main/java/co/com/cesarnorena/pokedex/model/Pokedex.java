@@ -1,5 +1,7 @@
 package co.com.cesarnorena.pokedex.model;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -60,7 +62,7 @@ public class Pokedex {
         }
 
         public String getImageUrl() {
-            if (imageUrl == null)
+            if (imageUrl == null || TextUtils.isEmpty(imageUrl) || imageUrl.equalsIgnoreCase("null"))
                 this.imageUrl = "http://assets.pokemon.com/assets/cms2/img/pokedex/detail/"
                         + Pokemon.getFormattedId(number) + ".png";
 

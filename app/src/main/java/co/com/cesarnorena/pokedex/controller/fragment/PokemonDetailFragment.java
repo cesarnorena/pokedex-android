@@ -14,13 +14,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import co.com.cesarnorena.pokedex.MyApplication;
 import co.com.cesarnorena.pokedex.R;
 import co.com.cesarnorena.pokedex.controller.dialog.CustomAlertDialog;
 import co.com.cesarnorena.pokedex.controller.activity.MainActivity;
 import co.com.cesarnorena.pokedex.model.Pokemon;
-import co.com.cesarnorena.pokedex.restService.PokemonServices;
-import co.com.cesarnorena.pokedex.restService.RestClient;
+import co.com.cesarnorena.pokedex.restservice.PokemonServices;
+import co.com.cesarnorena.pokedex.restservice.RestClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,17 +32,26 @@ import retrofit2.Response;
  */
 public class PokemonDetailFragment extends BaseFragment {
 
-    private Context context;
+    @Bind(R.id.pokemon_detail_progress)
+     View progressV;
 
-    private View progressV;
-    private ImageView imageV;
-    private TextView nameV;
-    private TextView nationalIdV;
+    @Bind(R.id.pokemon_detail_image)
+     ImageView imageV;
+
+    @Bind(R.id.pokemon_detail_name)
+     TextView nameV;
+
+    @Bind(R.id.pokemon_detail_number)
+     TextView nationalIdV;
+
+    private Context context;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View viewRoot = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
+        ButterKnife.bind(this, view);
+
         context = getActivity().getApplicationContext();
 
         Bundle args = getArguments();
@@ -51,17 +62,18 @@ public class PokemonDetailFragment extends BaseFragment {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        progressV = viewRoot.findViewById(R.id.pokemon_detail_progress);
-        imageV = (ImageView) viewRoot.findViewById(R.id.pokemon_detail_image);
-        nameV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_name);
-        nationalIdV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_number);
-
         if (args != null) {
             String resourceUri = args.getString("resourceUrl", null);
             attemptGetPokemon(resourceUri);
         }
 
-        return viewRoot;
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     private void attemptGetPokemon(final String resourceUri) {
