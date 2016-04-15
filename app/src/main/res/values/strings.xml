@@ -3,8 +3,12 @@
     <string name="content_description">content description</string>
 
     <string name="pokemon_name">Name: %1$s</string>
-    <string name="pokemon_national_id">ID No.: %1$s</string>
+    <string name="pokemon_national_id">No.%1$s</string>
     <string name="pokemon_gender">Gender: %1$s</string>
 
-    <string name="alert_no_connection">No hay conexión a internet</string>
+    <string name="alert_title_remeber">Recuerda</string>
+    <string name="alert_title">Alerta</string>
+    <string name="alert_accept">Aceptar</string>
+    <string name="alert_no_connection">Para utilizar la aplicación necesitas conexión a internet</string>
+    <string name="alert_server_error">En el momento hay problemas con el servidor, intenta luego</string>
 </resources>

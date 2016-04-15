@@ -2,9 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/light_gray"
+    android:paddingBottom="@dimen/minimal_spacing"
+    android:paddingTop="@dimen/minimal_spacing"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <ListView
+        android:dividerHeight="@dimen/minimal_spacing"
+        android:divider="@android:color/transparent"
         android:id="@+id/pokemon_list_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -1,6 +1,5 @@
 package co.com.cesarnorena.pokedex.controller.fragment;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,40 +14,47 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import co.com.cesarnorena.pokedex.MyApplication;
 import co.com.cesarnorena.pokedex.R;
-import co.com.cesarnorena.pokedex.controller.CustomAlertDialog;
+import co.com.cesarnorena.pokedex.controller.dialog.CustomAlertDialog;
 import co.com.cesarnorena.pokedex.controller.activity.MainActivity;
 import co.com.cesarnorena.pokedex.model.Pokemon;
-import co.com.cesarnorena.pokedex.restService.PokemonServices;
-import co.com.cesarnorena.pokedex.restService.RestClient;
+import co.com.cesarnorena.pokedex.restservice.PokemonServices;
+import co.com.cesarnorena.pokedex.restservice.RestClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
- * Created by Cesar on 16/01/2016.
- * <p/>
- * Fragmento que controla la vita de Detalles del Pokemon
+ * Created by Cesar Norena on 16/01/2016.
  */
-public class PokemonDetailFragment extends Fragment {
+public class PokemonDetailFragment extends BaseFragment {
 
-    private Context ctx;
+    @Bind(R.id.pokemon_detail_progress)
+     View progressV;
 
-    private View progress;
-    private ImageView imageV;
-    private TextView nameV;
-    private TextView genderV;
-    private TextView nationalIdV;
+    @Bind(R.id.pokemon_detail_image)
+     ImageView imageV;
+
+    @Bind(R.id.pokemon_detail_name)
+     TextView nameV;
+
+    @Bind(R.id.pokemon_detail_number)
+     TextView nationalIdV;
+
+    private Context context;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View viewRoot = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
-        Bundle args = getArguments();
+        View view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
+        ButterKnife.bind(this, view);
 
-        ctx = getActivity().getApplicationContext();
+        context = getActivity().getApplicationContext();
+
+        Bundle args = getArguments();
 
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -56,50 +62,42 @@ public class PokemonDetailFragment extends Fragment {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        progress = viewRoot.findViewById(R.id.pokemon_detail_progress);
-        imageV = (ImageView) viewRoot.findViewById(R.id.pokemon_detail_image);
-        nameV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_name);
-        genderV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_gender);
-        nationalIdV = (TextView) viewRoot.findViewById(R.id.pokemon_detail_national_id);
-
         if (args != null) {
-            String resourceUri = args.getString("resourceUri", null);
+            String resourceUri = args.getString("resourceUrl", null);
             attemptGetPokemon(resourceUri);
         }
 
-        return viewRoot;
+        return view;
     }
 
-    /**
-     * Verifica que haya conexión a internet antes de solicitar los detalles
-     * del Pokemon al servidor
-     *
-     * @param resourceUri recurso para obtener los datos
-     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     private void attemptGetPokemon(final String resourceUri) {
         showProgress(true);
 
-        if (MyApplication.isConnected(ctx))
+        if (MyApplication.isConnected(context))
             getPokemon(resourceUri);
         else {
             showProgress(false);
 
-            CustomAlertDialog.create(getString(R.string.alert_no_connection), new CustomAlertDialog.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    attemptGetPokemon(resourceUri);
-                }
-            }).show(getFragmentManager(), null);
+            CustomAlertDialog.create(
+                    getString(R.string.alert_title_remeber),
+                    getString(R.string.alert_no_connection),
+                    getString(R.string.alert_accept),
+                    new CustomAlertDialog.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            attemptGetPokemon(resourceUri);
+                        }
+                    }).show(getFragmentManager(), null);
         }
     }
 
-    /**
-     * Obtiene los datos del Pokemon seleccionado haciendo un llamado GET al api de
-     * pokeapi.co y encapsula los datos en el modelo Pokemon
-     *
-     * @param resourceUri recurso para obtener los datos
-     */
-    private void getPokemon(String resourceUri) {
+    private void getPokemon(final String resourceUri) {
         showProgress(true);
 
         PokemonServices pokemonService = RestClient.getRetrofit().create(PokemonServices.class);
@@ -110,45 +108,44 @@ public class PokemonDetailFragment extends Fragment {
             public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                 if (isAdded()) {
                     Pokemon pokemon = response.body();
-                    //getSprites(pokemon);
-
-                    showProgress(false);
                     updateView(pokemon);
+                    showProgress(false);
                 }
             }
 
             @Override
             public void onFailure(Call<Pokemon> call, Throwable t) {
-                Log.e(getTag(), "onFailure() called with: " + "t = [" + t + "]");
-                if (isAdded())
+                Log.e(getTag(), "onFailure() "+ t );
+
+                if (isVisible()) {
                     showProgress(false);
+                    CustomAlertDialog.create(
+                            getString(R.string.alert_title),
+                            getString(R.string.alert_server_error),
+                            getString(R.string.alert_accept),
+                            new CustomAlertDialog.OnDismissListener() {
+                                @Override
+                                public void onDismiss() {
+                                    attemptGetPokemon(resourceUri);
+                                }
+                            }).show(getFragmentManager(), null);
+                }
             }
         });
     }
 
-    /**
-     * actualiza la vista una vez obentidos los datos del Pokemon
-     *
-     * @param pokemon Info del Pokemon
-     */
     private void updateView(Pokemon pokemon) {
-        showProgress(false);
-
-        Picasso.with(ctx)
+        int size= (int)getResources().getDimension(R.dimen.detail_image);
+        Picasso.with(context)
                 .load(pokemon.getImageUrl())
+                .resize(size, size)
                 .into(imageV);
 
-        nameV.setText(String.format(getString(R.string.pokemon_name), pokemon.getName()));
+        String name = pokemon.getName();
+        nameV.setText(name.substring(0, 1).toUpperCase() + name.substring(1));
 
         nationalIdV.setText(String.format(getString(R.string.pokemon_national_id),
-                String.valueOf(pokemon.getId())));
-
-        /*if (pokemon.getGender() != null)
-            genderV.setText(String.format(getString(R.string.pokemon_gender),
-                    pokemon.getGender()));
-        else
-            genderV.setText(String.format(getString(R.string.pokemon_gender),
-                    "M / F"));*/
+                Pokemon.getFormattedId(pokemon.getId())));
     }
 
     @Override
@@ -164,6 +161,6 @@ public class PokemonDetailFragment extends Fragment {
     }
 
     private void showProgress(boolean isVisible) {
-        progress.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressV.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }
