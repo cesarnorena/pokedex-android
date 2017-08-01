@@ -1,7 +1,8 @@
-package co.cesarnorena.pokedex
+package co.cesarnorena.pokedex.app.presenter
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import co.cesarnorena.pokedex.R
 
 class MainActivity : AppCompatActivity() {
 
