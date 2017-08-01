@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_padding">
+
+        <ImageView
+            android:id="@+id/pokemon_row_image"
+            android:layout_width="@dimen/row_image"
+            android:layout_height="@dimen/row_image"
+            android:layout_marginEnd="@dimen/minimal_spacing"
+            android:layout_marginRight="@dimen/minimal_spacing"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/pokemon_row_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/pokemon_row_image"
+            android:layout_toRightOf="@id/pokemon_row_image"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_large"
+            tools:text="No.001" />
+
+        <TextView
+            android:id="@+id/pokemon_row_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pokemon_row_number"
+            android:layout_toEndOf="@id/pokemon_row_image"
+            android:layout_toRightOf="@id/pokemon_row_image"
+            android:gravity="center_vertical"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_xlarge"
+            tools:text="Pikachu" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
