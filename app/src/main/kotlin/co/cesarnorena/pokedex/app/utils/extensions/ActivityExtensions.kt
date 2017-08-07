@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.util.extension
+package co.cesarnorena.pokedex.app.utils.extensions
 
 import android.app.Fragment
 import android.app.FragmentManager

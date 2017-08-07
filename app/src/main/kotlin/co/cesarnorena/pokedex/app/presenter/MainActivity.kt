@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.pokemonList.PokemonListFragment
-import co.cesarnorena.pokedex.app.util.extension.addFragment
+import co.cesarnorena.pokedex.app.utils.extensions.addFragment
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 

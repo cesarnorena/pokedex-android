@@ -13,5 +13,4 @@ class PokemonListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pokemon_list, container)
         return view
     }
-
 }
