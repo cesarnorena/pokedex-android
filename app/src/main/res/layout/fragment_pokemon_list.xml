@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pokemon_list_listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray"
-    android:paddingBottom="@dimen/minimal_spacing"
-    android:paddingEnd="@dimen/activity_padding"
-    android:paddingStart="@dimen/activity_padding"
-    android:paddingTop="@dimen/minimal_spacing">
-
-    <ListView
-        android:id="@+id/pokemon_list_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="@dimen/minimal_spacing" />
-
-    <ProgressBar
-        android:id="@+id/pokemon_list_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-
-</RelativeLayout>
+    android:background="@color/light_gray" />

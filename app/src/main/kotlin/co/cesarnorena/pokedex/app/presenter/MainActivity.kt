@@ -4,18 +4,25 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.pokemonList.PokemonListFragment
-import co.cesarnorena.pokedex.app.utils.extensions.addFragment
+import co.cesarnorena.pokedex.app.utils.extensions.replaceFragment
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+
+    lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupInjection()
+        presenter.onCreate()
+    }
+
+    fun setupInjection() {
+        presenter = MainPresenter(this)
     }
 
     override fun showPokemonList() {
-        val pokemonListFragment = PokemonListFragment()
-        addFragment(pokemonListFragment, R.id.fragment_main_container)
+        replaceFragment(PokemonListFragment(), R.id.fragment_main_container)
     }
 
 }
