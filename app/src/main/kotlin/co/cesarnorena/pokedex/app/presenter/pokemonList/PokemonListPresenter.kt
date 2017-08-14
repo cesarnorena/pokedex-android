@@ -1,5 +1,6 @@
 package co.cesarnorena.pokedex.app.presenter.pokemonList
 
+import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
 
 class PokemonListPresenter(private val view: PokemonListContract.View,
@@ -16,5 +17,9 @@ class PokemonListPresenter(private val view: PokemonListContract.View,
                     view.setupList(pokedex.pokedexEntries)
                 },
                 { it.printStackTrace() })
+    }
+
+    override fun onPokemonItemClick(pokemon: PokedexEntry) {
+        view.navigatePokemonDetail()
     }
 }

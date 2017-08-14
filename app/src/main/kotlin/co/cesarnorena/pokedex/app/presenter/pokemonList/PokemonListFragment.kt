@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
+import co.cesarnorena.pokedex.app.presenter.MainActivity
 import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
@@ -44,9 +45,16 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     override fun setupList(pokemonList: List<PokedexEntry>) {
-        val adapter = PokemonListAdapter(pokemonList)
+        val adapter = PokemonListAdapter(context, pokemonList)
+        adapter.onItemClick {
+            presenter.onPokemonItemClick(it)
+        }
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
+    }
+
+    override fun navigatePokemonDetail() {
+        (activity as MainActivity).showPokemonDetail()
     }
 
     override fun getContext(): Context {

@@ -1,5 +1,7 @@
 package co.cesarnorena.pokedex.app.presenter.pokemonList
 
+import android.content.Context
+import android.content.res.Resources
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,11 @@ import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.data.model.PokedexEntry
 
-class PokemonListAdapter(val pokemonList: List<PokedexEntry>) : RecyclerView.Adapter<PokemonListAdapter.ViewHolder>() {
+class PokemonListAdapter(context: Context, val pokemonList: List<PokedexEntry>)
+    : RecyclerView.Adapter<PokemonListAdapter.ViewHolder>() {
+
+    val resources: Resources = context.resources
+    private var onItemClick: ((PokedexEntry) -> Any)? = null
 
     override fun getItemCount(): Int = pokemonList.size
 
@@ -23,14 +29,21 @@ class PokemonListAdapter(val pokemonList: List<PokedexEntry>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pokemon = pokemonList[position]
 
-        holder.numberView.text = pokemon.number.toString()
+        holder.numberView.text = getFormarNumber(pokemon.number)
         holder.nameView.text = pokemon.specie.name
+        holder.containerView.setOnClickListener {
+            onItemClick?.invoke(pokemon)
+        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        @BindView(R.id.pokemon_row_container)
+        lateinit var containerView: View
+
         @BindView(R.id.pokemon_row_number)
         lateinit var numberView: TextView
+
         @BindView(R.id.pokemon_row_name)
         lateinit var nameView: TextView
 
@@ -38,4 +51,13 @@ class PokemonListAdapter(val pokemonList: List<PokedexEntry>) : RecyclerView.Ada
             ButterKnife.bind(this, view)
         }
     }
+
+    fun getFormarNumber(number: Int): String {
+        return String.format(resources.getString(R.string.pokemon_number), number)
+    }
+
+    fun onItemClick(listener: (PokedexEntry) -> Any) {
+        onItemClick = listener
+    }
+
 }

@@ -20,7 +20,7 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
     lateinit var presenter: PokemonDetailContract.Presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_pokemon_detail, container)
+        val view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
         ButterKnife.bind(this, view)
         setupInjeciton()
         presenter.onCreateView(1)

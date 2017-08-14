@@ -4,6 +4,7 @@ interface MainContract {
 
     interface View {
         fun showPokemonList()
+        fun showPokemonDetail()
     }
 
     interface Presenter {
