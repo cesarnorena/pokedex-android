@@ -6,6 +6,7 @@ interface PokemonDetailContract {
 
     interface View {
         fun updatePokemonData(pokemon: Pokemon)
+        fun showProgress(show: Boolean)
     }
 
     interface Presenter {

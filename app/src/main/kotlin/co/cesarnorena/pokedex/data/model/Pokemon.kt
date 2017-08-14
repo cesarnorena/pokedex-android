@@ -16,6 +16,8 @@ data class Pokemon(@SerializedName("id") val id: Int,
 
     companion object {
 
+        const val ID = "id"
+
         fun getFormattedId(id: Int): String {
             val formattedId: String
 

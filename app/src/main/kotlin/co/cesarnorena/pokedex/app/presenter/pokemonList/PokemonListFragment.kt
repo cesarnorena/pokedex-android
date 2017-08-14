@@ -47,14 +47,14 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     override fun setupList(pokemonList: List<PokedexEntry>) {
         val adapter = PokemonListAdapter(context, pokemonList)
         adapter.onItemClick {
-            presenter.onPokemonItemClick(it)
+            presenter.onPokemonItemClick(it.number)
         }
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
     }
 
-    override fun navigatePokemonDetail() {
-        (activity as MainActivity).showPokemonDetail()
+    override fun navigatePokemonDetail(pokemonId: Int) {
+        (activity as MainActivity).showPokemonDetail(pokemonId)
     }
 
     override fun getContext(): Context {

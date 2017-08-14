@@ -6,11 +6,11 @@ interface PokemonListContract {
 
     interface View {
         fun setupList(pokemonList: List<PokedexEntry>)
-        fun navigatePokemonDetail()
+        fun navigatePokemonDetail(pokemonId: Int)
     }
 
     interface Presenter {
         fun onCreateView()
-        fun onPokemonItemClick(pokemon: PokedexEntry)
+        fun onPokemonItemClick(pokemonId: Int)
     }
 }

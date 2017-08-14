@@ -10,11 +10,16 @@ class PokemonDetailPresenter(private val view: PokemonDetailContract.View,
     }
 
     fun getPokemon(id: Int) {
+        view.showProgress(true)
         val request = GetPokemon.Input(id)
         getPokemon.execute(request).subscribe(
                 { (pokemon) ->
+                    view.showProgress(false)
                     view.updatePokemonData(pokemon)
                 },
-                { it.printStackTrace() })
+                {
+                    view.showProgress(false)
+                    it.printStackTrace()
+                })
     }
 }

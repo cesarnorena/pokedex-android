@@ -6,6 +6,7 @@ import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.pokemonDetail.PokemonDetailFragment
 import co.cesarnorena.pokedex.app.presenter.pokemonList.PokemonListFragment
 import co.cesarnorena.pokedex.app.utils.extensions.replaceFragment
+import co.cesarnorena.pokedex.data.model.Pokemon
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -26,8 +27,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         replaceFragment(PokemonListFragment(), R.id.fragment_main_container)
     }
 
-    override fun showPokemonDetail() {
-        replaceFragment(PokemonDetailFragment(), R.id.fragment_main_container)
+    override fun showPokemonDetail(id: Int) {
+        val args = Bundle()
+        args.putInt(Pokemon.ID, id)
+        val fragment = PokemonDetailFragment()
+        fragment.arguments = args
+        replaceFragment(fragment, R.id.fragment_main_container)
     }
 
 }
