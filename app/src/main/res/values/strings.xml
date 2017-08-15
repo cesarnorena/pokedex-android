@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Pokedex</string>
 
-    <string name="pokemon_number">No. %d</string>
+    <string name="pokemon_number">No. %s</string>
 </resources>

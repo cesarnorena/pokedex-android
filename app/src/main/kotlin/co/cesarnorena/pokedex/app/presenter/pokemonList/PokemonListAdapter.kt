@@ -6,13 +6,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.data.model.PokedexEntry
+import co.cesarnorena.pokedex.data.model.Pokemon
+import co.cesarnorena.pokedex.data.remote.PokemonService
+import com.bumptech.glide.Glide
 
-class PokemonListAdapter(context: Context, val pokemonList: List<PokedexEntry>)
+class PokemonListAdapter(val context: Context, val pokemonList: List<PokedexEntry>)
     : RecyclerView.Adapter<PokemonListAdapter.ViewHolder>() {
 
     val resources: Resources = context.resources
@@ -29,6 +33,11 @@ class PokemonListAdapter(context: Context, val pokemonList: List<PokedexEntry>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pokemon = pokemonList[position]
 
+        val imageId = Pokemon.getFormattedId(pokemon.number)
+        Glide.with(context)
+                .load(PokemonService.getImageUrl(imageId))
+                .into(holder.imageView)
+
         holder.numberView.text = getFormarNumber(pokemon.number)
         holder.nameView.text = pokemon.specie.name
         holder.containerView.setOnClickListener {
@@ -40,6 +49,9 @@ class PokemonListAdapter(context: Context, val pokemonList: List<PokedexEntry>)
 
         @BindView(R.id.pokemon_row_container)
         lateinit var containerView: View
+
+        @BindView(R.id.pokemon_row_image)
+        lateinit var imageView: ImageView
 
         @BindView(R.id.pokemon_row_number)
         lateinit var numberView: TextView
@@ -53,7 +65,8 @@ class PokemonListAdapter(context: Context, val pokemonList: List<PokedexEntry>)
     }
 
     fun getFormarNumber(number: Int): String {
-        return String.format(resources.getString(R.string.pokemon_number), number)
+        return String.format(resources.getString(R.string.pokemon_number),
+                Pokemon.getFormattedId(number))
     }
 
     fun onItemClick(listener: (PokedexEntry) -> Any) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import butterknife.BindView
@@ -15,6 +16,7 @@ import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokemon
 import co.tappsi.taxidriver.data.remote.client.ServiceFactory
+import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -22,6 +24,9 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
 
     @BindView(R.id.pokemon_detail_progress)
     lateinit var progress: ProgressBar
+
+    @BindView(R.id.pokemon_detail_image)
+    lateinit var pokemonImage: ImageView
 
     @BindView(R.id.pokemon_detail_number)
     lateinit var pokemonNumber: TextView
@@ -50,12 +55,20 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
     }
 
     override fun updatePokemonData(pokemon: Pokemon) {
-        pokemonNumber.text = String.format(resources.getString(R.string.pokemon_number), pokemon.id)
+        val imageId = Pokemon.getFormattedId(pokemon.id)
+        Glide.with(this)
+                .load(PokemonService.getImageUrl(imageId))
+                .into(pokemonImage)
+        pokemonNumber.text = getFormarNumber(pokemon.id)
         pokemonName.text = pokemon.name
-
     }
 
     override fun showProgress(show: Boolean) {
         progress.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    fun getFormarNumber(number: Int): String {
+        return String.format(resources.getString(R.string.pokemon_number),
+                Pokemon.getFormattedId(number))
     }
 }
