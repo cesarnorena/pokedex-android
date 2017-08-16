@@ -1,4 +1,4 @@
-package co.tappsi.taxidriver.data.remote.client
+package co.cesarnorena.pokedex.data.remote.client
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient

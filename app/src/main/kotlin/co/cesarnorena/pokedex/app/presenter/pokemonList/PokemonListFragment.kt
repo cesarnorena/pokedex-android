@@ -16,7 +16,7 @@ import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
-import co.tappsi.taxidriver.data.remote.client.ServiceFactory
+import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

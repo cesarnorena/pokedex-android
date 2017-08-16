@@ -15,7 +15,7 @@ import co.cesarnorena.pokedex.data.model.Pokemon
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokemon
-import co.tappsi.taxidriver.data.remote.client.ServiceFactory
+import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -45,6 +45,11 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         return view
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     fun setupInjection() {
         val remote = PokemonRepository(ServiceFactory.create(PokemonService::class.java,
                 PokemonService.BASE_URL))
@@ -55,9 +60,8 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
     }
 
     override fun updatePokemonData(pokemon: Pokemon) {
-        val imageId = Pokemon.getFormattedId(pokemon.id)
         Glide.with(this)
-                .load(PokemonService.getImageUrl(imageId))
+                .load(pokemon.imageUrl)
                 .into(pokemonImage)
         pokemonNumber.text = getFormarNumber(pokemon.id)
         pokemonName.text = pokemon.name

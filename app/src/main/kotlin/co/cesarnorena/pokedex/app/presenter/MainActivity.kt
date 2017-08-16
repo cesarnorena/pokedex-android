@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showPokemonList() {
-        addFragment(PokemonListFragment(), R.id.fragment_main_container)
+        addFragment(PokemonListFragment(), R.id.main_fragment_container)
     }
 
     override fun showPokemonDetail(id: Int) {
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         args.putInt(Pokemon.ID, id)
         val fragment = PokemonDetailFragment()
         fragment.arguments = args
-        addFragment(fragment, R.id.fragment_main_container, true)
+        addFragment(fragment, R.id.main_fragment_container, true)
     }
 
 }

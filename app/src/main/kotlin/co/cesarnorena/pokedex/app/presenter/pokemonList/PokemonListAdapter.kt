@@ -13,7 +13,6 @@ import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.data.model.Pokemon
-import co.cesarnorena.pokedex.data.remote.PokemonService
 import com.bumptech.glide.Glide
 
 class PokemonListAdapter(val context: Context, val pokemonList: List<PokedexEntry>)
@@ -33,12 +32,11 @@ class PokemonListAdapter(val context: Context, val pokemonList: List<PokedexEntr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pokemon = pokemonList[position]
 
-        val imageId = Pokemon.getFormattedId(pokemon.number)
         Glide.with(context)
-                .load(PokemonService.getImageUrl(imageId))
+                .load(pokemon.imageUrl)
                 .into(holder.imageView)
 
-        holder.numberView.text = getFormarNumber(pokemon.number)
+        holder.numberView.text = getFormatNumber(pokemon.number)
         holder.nameView.text = pokemon.specie.name
         holder.containerView.setOnClickListener {
             onItemClick?.invoke(pokemon)
@@ -64,7 +62,7 @@ class PokemonListAdapter(val context: Context, val pokemonList: List<PokedexEntr
         }
     }
 
-    fun getFormarNumber(number: Int): String {
+    fun getFormatNumber(number: Int): String {
         return String.format(resources.getString(R.string.pokemon_number),
                 Pokemon.getFormattedId(number))
     }

@@ -11,5 +11,6 @@ interface PokemonDetailContract {
 
     interface Presenter {
         fun onCreateView(pokemonId: Int)
+        fun onDestroy()
     }
 }
