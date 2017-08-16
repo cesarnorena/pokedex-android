@@ -8,14 +8,13 @@ private enum class FragmentOperation {
     ADD, REPLACE, REMOVE
 }
 
-fun AppCompatActivity.addFragment(fragment: Fragment, resource: Int) {
-    fragmentTransaction(FragmentOperation.ADD, fragment, fragmentManager, resource)
+fun AppCompatActivity.addFragment(fragment: Fragment, resource: Int,
+                                  addToBackStack: Boolean = false) {
+    fragmentTransaction(FragmentOperation.ADD, fragment, fragmentManager, resource, addToBackStack)
 }
 
-fun AppCompatActivity.replaceFragment(fragment: Fragment, resource: Int,
-                                      addToBackStack: Boolean = false) {
-    fragmentTransaction(FragmentOperation.REPLACE, fragment, fragmentManager,
-            resource, addToBackStack)
+fun AppCompatActivity.replaceFragment(fragment: Fragment, resource: Int) {
+    fragmentTransaction(FragmentOperation.REPLACE, fragment, fragmentManager, resource)
 }
 
 fun AppCompatActivity.removeFragment(fragment: Fragment) {
