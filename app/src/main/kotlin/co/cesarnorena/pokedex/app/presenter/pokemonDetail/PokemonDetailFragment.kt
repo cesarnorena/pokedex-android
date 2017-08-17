@@ -13,9 +13,9 @@ import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.data.model.Pokemon
 import co.cesarnorena.pokedex.data.remote.PokemonService
+import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokemon
-import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -50,7 +50,7 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         presenter.onDestroy()
     }
 
-    fun setupInjection() {
+    private fun setupInjection() {
         val remote = PokemonRepository(ServiceFactory.create(PokemonService::class.java,
                 PokemonService.BASE_URL))
         val subscribeOn = Schedulers.io()
@@ -71,7 +71,7 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         progress.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    fun getFormarNumber(number: Int): String {
+    private fun getFormarNumber(number: Int): String {
         return String.format(resources.getString(R.string.pokemon_number),
                 Pokemon.getFormattedId(number))
     }

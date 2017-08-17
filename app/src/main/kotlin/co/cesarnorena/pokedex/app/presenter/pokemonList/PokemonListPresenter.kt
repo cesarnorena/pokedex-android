@@ -9,7 +9,7 @@ class PokemonListPresenter(private val view: PokemonListContract.View,
         getPokedex()
     }
 
-    fun getPokedex() {
+    private fun getPokedex() {
         val request = GetPokedex.Input(1)
         getPokedex.execute(request).subscribe(
                 { (pokedex) ->

@@ -6,7 +6,6 @@ import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.pokemonDetail.PokemonDetailFragment
 import co.cesarnorena.pokedex.app.presenter.pokemonList.PokemonListFragment
 import co.cesarnorena.pokedex.app.utils.extensions.addFragment
-import co.cesarnorena.pokedex.app.utils.extensions.replaceFragment
 import co.cesarnorena.pokedex.data.model.Pokemon
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.onCreate()
     }
 
-    fun setupInjection() {
+    private fun setupInjection() {
         presenter = MainPresenter(this)
     }
 

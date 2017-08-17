@@ -14,9 +14,9 @@ import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.MainActivity
 import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.data.remote.PokemonService
+import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
-import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -35,12 +35,10 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         return view
     }
 
-    fun setupInjection() {
+    private fun setupInjection() {
         val remote = PokemonRepository(ServiceFactory.create(PokemonService::class.java,
                 PokemonService.BASE_URL))
-        val subscribeOn = Schedulers.io()
-        val observeOn = AndroidSchedulers.mainThread()
-        val getPokedex = GetPokedex(remote, subscribeOn, observeOn)
+        val getPokedex = GetPokedex(remote)
         presenter = PokemonListPresenter(this, getPokedex)
     }
 
@@ -57,7 +55,5 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         (activity as MainActivity).showPokemonDetail(pokemonId)
     }
 
-    override fun getContext(): Context {
-        return activity
-    }
+    override fun getContext(): Context = activity
 }
