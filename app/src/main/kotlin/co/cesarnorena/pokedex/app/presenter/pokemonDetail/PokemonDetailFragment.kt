@@ -2,7 +2,9 @@ package co.cesarnorena.pokedex.app.presenter.pokemonDetail
 
 import android.app.Fragment
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,16 +13,18 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
+import co.cesarnorena.pokedex.app.presenter.MainActivity
 import co.cesarnorena.pokedex.data.model.Pokemon
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokemon
 import com.bumptech.glide.Glide
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
+
+    @BindView(R.id.pokemon_detail_toolbar)
+    lateinit var toolbar: Toolbar
 
     @BindView(R.id.pokemon_detail_progress)
     lateinit var progress: ProgressBar
@@ -39,6 +43,7 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
         ButterKnife.bind(this, view)
+        setupToolbar()
         setupInjection()
         val id = arguments.getInt(Pokemon.ID)
         presenter.onCreateView(id)
@@ -50,20 +55,32 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         presenter.onDestroy()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            (activity as MainActivity).onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupToolbar() {
+        with(activity as MainActivity) {
+            setHasOptionsMenu(true)
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
     private fun setupInjection() {
-        val remote = PokemonRepository(ServiceFactory.create(PokemonService::class.java,
-                PokemonService.BASE_URL))
-        val subscribeOn = Schedulers.io()
-        val observeOn = AndroidSchedulers.mainThread()
-        val getPokemon = GetPokemon(remote, subscribeOn, observeOn)
+        val pokemonService = ServiceFactory.create(PokemonService::class.java, PokemonService.BASE_URL)
+        val remote = PokemonRepository(pokemonService)
+        val getPokemon = GetPokemon(remote)
         presenter = PokemonDetailPresenter(this, getPokemon)
     }
 
     override fun updatePokemonData(pokemon: Pokemon) {
-        Glide.with(this)
-                .load(pokemon.imageUrl)
-                .into(pokemonImage)
-        pokemonNumber.text = getFormarNumber(pokemon.id)
+        Glide.with(this).load(pokemon.imageUrl).into(pokemonImage)
+        pokemonNumber.text = getFormatNumber(pokemon.id)
         pokemonName.text = pokemon.name
     }
 
@@ -71,8 +88,7 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         progress.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    private fun getFormarNumber(number: Int): String {
-        return String.format(resources.getString(R.string.pokemon_number),
-                Pokemon.getFormattedId(number))
+    private fun getFormatNumber(number: Int): String {
+        return String.format(resources.getString(R.string.pokemon_number), Pokemon.getFormattedId(number))
     }
 }

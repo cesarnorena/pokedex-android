@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +18,13 @@ import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class PokemonListFragment : Fragment(), PokemonListContract.View {
 
-    @BindView(R.id.pokemon_list_listview)
+    @BindView(R.id.pokemon_list_toolbar)
+    lateinit var toolbar: Toolbar
+
+    @BindView(R.id.pokemon_list_recyclerview)
     lateinit var recyclerView: RecyclerView
 
     lateinit var presenter: PokemonListContract.Presenter
@@ -30,9 +32,14 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_pokemon_list, container, false)
         ButterKnife.bind(this, view)
+        setupToolbar()
         setupInjection()
         presenter.onCreateView()
         return view
+    }
+
+    private fun setupToolbar() {
+        (activity as MainActivity).setSupportActionBar(toolbar)
     }
 
     private fun setupInjection() {

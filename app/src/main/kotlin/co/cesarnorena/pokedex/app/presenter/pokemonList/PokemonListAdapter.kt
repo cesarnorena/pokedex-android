@@ -15,11 +15,11 @@ import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.data.model.Pokemon
 import com.bumptech.glide.Glide
 
-class PokemonListAdapter(val context: Context, val pokemonList: List<PokedexEntry>)
+class PokemonListAdapter(private val context: Context, private val pokemonList: List<PokedexEntry>)
     : RecyclerView.Adapter<PokemonListAdapter.ViewHolder>() {
 
-    val resources: Resources = context.resources
-    private var onItemClick: ((PokedexEntry) -> Any)? = null
+    private val mResources: Resources = context.resources
+    private var mOnItemClick: ((PokedexEntry) -> Any)? = null
 
     override fun getItemCount(): Int = pokemonList.size
 
@@ -32,14 +32,11 @@ class PokemonListAdapter(val context: Context, val pokemonList: List<PokedexEntr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pokemon = pokemonList[position]
 
-        Glide.with(context)
-                .load(pokemon.imageUrl)
-                .into(holder.imageView)
-
-        holder.numberView.text = getFormatNumber(pokemon.number)
-        holder.nameView.text = pokemon.specie.name
-        holder.containerView.setOnClickListener {
-            onItemClick?.invoke(pokemon)
+        with(holder) {
+            numberView.text = getFormatNumber(pokemon.number)
+            nameView.text = pokemon.specie.name
+            containerView.setOnClickListener { mOnItemClick?.invoke(pokemon) }
+            Glide.with(context).load(pokemon.imageUrl).into(imageView)
         }
     }
 
@@ -62,13 +59,13 @@ class PokemonListAdapter(val context: Context, val pokemonList: List<PokedexEntr
         }
     }
 
-    fun getFormatNumber(number: Int): String {
-        return String.format(resources.getString(R.string.pokemon_number),
-                Pokemon.getFormattedId(number))
+    private fun getFormatNumber(number: Int): String {
+        val format = mResources.getString(R.string.pokemon_number)
+        return String.format(format, Pokemon.getFormattedId(number))
     }
 
     fun onItemClick(listener: (PokedexEntry) -> Any) {
-        onItemClick = listener
+        mOnItemClick = listener
     }
 
 }
