@@ -33,7 +33,7 @@
             android:layout_margin="@dimen/minimal_spacing"
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@drawable/img_pikachu" />
+            tools:src="@drawable/img_pikachu" />
 
     </android.support.v7.widget.CardView>
 
