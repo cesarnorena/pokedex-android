@@ -17,4 +17,5 @@ abstract class SingleUseCase<in Q : SingleUseCase.Input, P : SingleUseCase.Outpu
     interface Input
 
     interface Output
+
 }

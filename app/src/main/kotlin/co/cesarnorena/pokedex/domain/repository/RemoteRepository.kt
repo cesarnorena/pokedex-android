@@ -8,4 +8,5 @@ interface RemoteRepository {
 
     fun getPokedex(id: Int): Single<Pokedex>
     fun getPokemon(id: Int): Single<Pokemon>
+
 }

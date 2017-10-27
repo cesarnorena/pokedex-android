@@ -26,4 +26,5 @@ class PokemonRepository(val pokemonService: PokemonService) : RemoteRepository {
             }
         }
     }
+
 }

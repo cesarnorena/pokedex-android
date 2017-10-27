@@ -10,7 +10,9 @@ interface PokemonListContract {
     }
 
     interface Presenter {
-        fun onCreateView()
+        fun onCreate()
+        fun onDestroy()
         fun onPokemonItemClick(pokemonId: Int)
     }
+
 }

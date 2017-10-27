@@ -6,20 +6,20 @@ import io.reactivex.disposables.Disposable
 class PokemonDetailPresenter(private val view: PokemonDetailContract.View,
                              private val getPokemon: GetPokemon) : PokemonDetailContract.Presenter {
 
-    var disposable: Disposable? = null
+    private var mDisposable: Disposable? = null
 
-    override fun onCreateView(pokemonId: Int) {
+    override fun onCreate(pokemonId: Int) {
         getPokemon(pokemonId)
     }
 
     override fun onDestroy() {
-        disposable?.dispose()
+        mDisposable?.dispose()
     }
 
-    fun getPokemon(id: Int) {
+    private fun getPokemon(id: Int) {
         view.showProgress(true)
         val request = GetPokemon.Input(id)
-        disposable = getPokemon.execute(request).subscribe(
+        mDisposable = getPokemon.execute(request).subscribe(
                 { (pokemon) ->
                     view.showProgress(false)
                     view.updatePokemonData(pokemon)
@@ -29,4 +29,5 @@ class PokemonDetailPresenter(private val view: PokemonDetailContract.View,
                     it.printStackTrace()
                 })
     }
+
 }

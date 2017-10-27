@@ -34,7 +34,7 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         ButterKnife.bind(this, view)
         setupToolbar()
         setupInjection()
-        presenter.onCreateView()
+        presenter.onCreate()
         return view
     }
 
@@ -63,4 +63,5 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     override fun getContext(): Context = activity
+
 }

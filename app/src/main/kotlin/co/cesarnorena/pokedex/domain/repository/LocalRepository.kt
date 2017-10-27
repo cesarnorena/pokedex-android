@@ -8,4 +8,5 @@ interface LocalRepository {
 
     fun getPokedex(): Single<Pokedex>
     fun getPokemon(): Single<Pokemon>
+
 }

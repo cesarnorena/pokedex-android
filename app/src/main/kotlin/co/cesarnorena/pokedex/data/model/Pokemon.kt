@@ -23,4 +23,5 @@ data class Pokemon(@SerializedName("id") val id: Int,
             return formattedId
         }
     }
+
 }

@@ -16,4 +16,5 @@ class GetPokemon(private val remoteRepository: RemoteRepository)
     data class Input(val id: Int) : SingleUseCase.Input
 
     data class Output(val pokemon: Pokemon) : SingleUseCase.Output
+
 }

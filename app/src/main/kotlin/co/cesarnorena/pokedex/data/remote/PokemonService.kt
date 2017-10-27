@@ -24,4 +24,5 @@ interface PokemonService {
 
     @GET("pokemon-species/{id}")
     fun getPokemon(@Path("id") id: Int): Single<Response<Pokemon>>
+
 }

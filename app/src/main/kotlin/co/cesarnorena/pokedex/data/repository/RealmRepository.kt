@@ -14,4 +14,5 @@ class RealmRepository : LocalRepository {
     override fun getPokemon(): Single<Pokemon> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }

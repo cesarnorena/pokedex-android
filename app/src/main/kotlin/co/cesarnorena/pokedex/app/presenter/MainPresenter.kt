@@ -5,4 +5,5 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     override fun onCreate() {
         view.showPokemonList()
     }
+
 }

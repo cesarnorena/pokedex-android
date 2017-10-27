@@ -30,8 +30,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showPokemonDetail(id: Int) {
         val args = Bundle()
         args.putInt(Pokemon.ID, id)
+
         val fragment = PokemonDetailFragment()
         fragment.arguments = args
+
         addFragment(fragment, R.id.main_fragment_container, true)
     }
 

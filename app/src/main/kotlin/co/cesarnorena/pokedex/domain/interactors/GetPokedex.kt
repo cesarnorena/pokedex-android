@@ -2,7 +2,6 @@ package co.cesarnorena.pokedex.domain.interactors
 
 import co.cesarnorena.pokedex.data.model.Pokedex
 import co.cesarnorena.pokedex.domain.repository.RemoteRepository
-import io.reactivex.Scheduler
 import io.reactivex.Single
 
 class GetPokedex(private val remoteRepository: RemoteRepository)
@@ -17,4 +16,5 @@ class GetPokedex(private val remoteRepository: RemoteRepository)
     data class Input(val id: Int) : SingleUseCase.Input
 
     data class Output(val pokedex: Pokedex) : SingleUseCase.Output
+
 }

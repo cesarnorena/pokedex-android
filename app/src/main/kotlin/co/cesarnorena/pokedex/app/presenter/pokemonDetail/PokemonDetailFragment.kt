@@ -46,7 +46,7 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         setupToolbar()
         setupInjection()
         val id = arguments.getInt(Pokemon.ID)
-        presenter.onCreateView(id)
+        presenter.onCreate(id)
         return view
     }
 
@@ -91,4 +91,5 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
     private fun getFormatNumber(number: Int): String {
         return String.format(resources.getString(R.string.pokemon_number), Pokemon.getFormattedId(number))
     }
+
 }
