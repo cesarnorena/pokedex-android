@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +19,8 @@
             android:layout_height="@dimen/row_image"
             android:layout_marginEnd="@dimen/minimal_spacing"
             android:layout_marginRight="@dimen/minimal_spacing"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"
+            tools:src="@drawable/img_pikachu" />
 
         <TextView
             android:id="@+id/pokemon_row_number"
@@ -28,7 +30,7 @@
             android:layout_toRightOf="@id/pokemon_row_image"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_large"
-            tools:text="No.001" />
+            tools:text="No.052" />
 
         <TextView
             android:id="@+id/pokemon_row_name"
