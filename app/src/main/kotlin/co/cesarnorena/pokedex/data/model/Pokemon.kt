@@ -12,15 +12,11 @@ data class Pokemon(@SerializedName("id") val id: Int,
         const val ID = "id"
 
         fun getFormattedId(id: Int): String {
-            val formattedId: String
-            if (id < 10) {
-                formattedId = "00$id"
-            } else if (id < 100) {
-                formattedId = "0$id"
-            } else {
-                formattedId = id.toString()
+            return when {
+                id < 10 -> "00$id"
+                id < 100 -> "0$id"
+                else -> id.toString()
             }
-            return formattedId
         }
     }
 
