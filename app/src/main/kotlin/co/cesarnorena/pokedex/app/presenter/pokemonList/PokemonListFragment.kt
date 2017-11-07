@@ -17,7 +17,10 @@ import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
+import co.cesarnorena.pokedex.data.repository.RealmRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
+import co.cesarnorena.pokedex.domain.repository.LocalRepository
+import co.cesarnorena.pokedex.domain.repository.RemoteRepository
 
 class PokemonListFragment : Fragment(), PokemonListContract.View {
 
@@ -43,9 +46,12 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     private fun setupInjection() {
-        val remote = PokemonRepository(ServiceFactory.create(PokemonService::class.java,
-                PokemonService.BASE_URL))
-        val getPokedex = GetPokedex(remote)
+        val remote: RemoteRepository = PokemonRepository(ServiceFactory
+                .create(PokemonService::class.java, PokemonService.BASE_URL))
+
+        val local: LocalRepository = RealmRepository()
+
+        val getPokedex = GetPokedex(remote, local)
         presenter = PokemonListPresenter(this, getPokedex)
     }
 

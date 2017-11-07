@@ -3,7 +3,7 @@ package co.cesarnorena.pokedex.data.local
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-class PokemonDb() : RealmObject() {
+open class PokemonDb() : RealmObject() {
 
     @PrimaryKey
     var id: Int = 0
