@@ -46,13 +46,13 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         setupToolbar()
         setupInjection()
         val id = arguments.getInt(Pokemon.ID)
-        presenter.onCreate(id)
+        presenter.onCreateView(id)
         return view
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
+        presenter.onDestroyView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

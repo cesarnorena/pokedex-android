@@ -7,10 +7,11 @@ import co.cesarnorena.pokedex.data.remote.client.HttpStatus
 import co.cesarnorena.pokedex.domain.repository.RemoteRepository
 import io.reactivex.Single
 
-class PokemonRepository(val pokemonService: PokemonService) : RemoteRepository {
+class PokemonRepository(private val pokemonService: PokemonService) : RemoteRepository {
 
     override fun getPokedex(id: Int): Single<Pokedex> {
-        return pokemonService.getPokedex(id).map { response ->
+        return pokemonService.
+                getPokedex(id).map { response ->
             when (response.code()) {
                 HttpStatus.OK -> response.body()
                 else -> throw Exception()

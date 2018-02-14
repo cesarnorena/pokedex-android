@@ -8,11 +8,11 @@ class PokemonDetailPresenter(private val view: PokemonDetailContract.View,
 
     private var mDisposable: Disposable? = null
 
-    override fun onCreate(pokemonId: Int) {
+    override fun onCreateView(pokemonId: Int) {
         getPokemon(pokemonId)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         mDisposable?.dispose()
     }
 

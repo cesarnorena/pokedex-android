@@ -8,11 +8,11 @@ class PokemonListPresenter(private val view: PokemonListContract.View,
 
     private var mDisposable: Disposable? = null
 
-    override fun onCreate() {
+    override fun onCreateView() {
         getPokedex()
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         mDisposable?.dispose()
     }
 

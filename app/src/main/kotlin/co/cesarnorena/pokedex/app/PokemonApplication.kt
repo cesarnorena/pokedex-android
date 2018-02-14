@@ -13,4 +13,5 @@ class PokemonApplication : Application() {
     private fun initRealm() {
         Realm.init(this)
     }
+
 }

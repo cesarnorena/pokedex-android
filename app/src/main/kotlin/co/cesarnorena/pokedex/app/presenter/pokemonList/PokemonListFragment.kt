@@ -37,8 +37,13 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         ButterKnife.bind(this, view)
         setupToolbar()
         setupInjection()
-        presenter.onCreate()
+        presenter.onCreateView()
         return view
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroyView()
     }
 
     private fun setupToolbar() {
