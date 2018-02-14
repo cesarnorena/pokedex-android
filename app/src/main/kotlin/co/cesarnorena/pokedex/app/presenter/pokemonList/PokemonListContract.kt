@@ -7,6 +7,7 @@ interface PokemonListContract {
     interface View {
         fun setupList(pokemonList: List<PokedexEntry>)
         fun navigatePokemonDetail(pokemonId: Int)
+        fun showNoInternetMessage(show: Boolean)
     }
 
     interface Presenter {

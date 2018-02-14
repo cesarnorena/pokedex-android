@@ -25,4 +25,17 @@
         app:layout_constraintTop_toBottomOf="@id/pokemon_list_toolbar"
         tools:listitem="@layout/item_pokemon_list" />
 
+    <TextView
+        android:id="@+id/pokemon_list_no_internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_list_no_internet"
+        android:textSize="@dimen/text_xlarge"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

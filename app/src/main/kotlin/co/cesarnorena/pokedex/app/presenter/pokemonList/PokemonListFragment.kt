@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
@@ -29,6 +30,9 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
 
     @BindView(R.id.pokemon_list_recyclerview)
     lateinit var recyclerView: RecyclerView
+
+    @BindView(R.id.pokemon_list_no_internet)
+    lateinit var noInternetText: TextView
 
     lateinit var presenter: PokemonListContract.Presenter
 
@@ -67,6 +71,11 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         }
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
+    }
+
+    override fun showNoInternetMessage(show: Boolean) {
+        noInternetText.visibility = if (show) View.VISIBLE else View.GONE
+        recyclerView.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun navigatePokemonDetail(pokemonId: Int) {

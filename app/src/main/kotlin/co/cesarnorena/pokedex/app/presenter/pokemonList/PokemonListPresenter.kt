@@ -21,7 +21,11 @@ class PokemonListPresenter(private val view: PokemonListContract.View,
         mDisposable = getPokedex.execute(request).subscribe(
                 { (pokedex) ->
                     view.setupList(pokedex.pokedexEntries)
-                }, Throwable::printStackTrace)
+                },
+                { error ->
+                    view.showNoInternetMessage(true)
+                    error.printStackTrace()
+                })
     }
 
     override fun onPokemonItemClick(pokemonId: Int) {

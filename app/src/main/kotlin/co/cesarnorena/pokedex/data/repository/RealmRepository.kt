@@ -35,7 +35,7 @@ class RealmRepository : LocalRepository {
         val realm = getRealm()
 
         return realm.saveAll(mappedList)
-                .doFinally { realm.close() }
+                .doFinally(realm::close)
     }
 
     override fun getPokemon(id: Int): Single<Pokemon> {
