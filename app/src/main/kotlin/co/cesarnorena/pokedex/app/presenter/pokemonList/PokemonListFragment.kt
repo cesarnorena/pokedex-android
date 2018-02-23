@@ -15,13 +15,9 @@ import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.MainActivity
 import co.cesarnorena.pokedex.data.model.PokedexEntry
-import co.cesarnorena.pokedex.data.remote.PokemonService
-import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
-import co.cesarnorena.pokedex.data.repository.PokemonRepository
-import co.cesarnorena.pokedex.data.repository.RealmRepository
-import co.cesarnorena.pokedex.domain.interactors.GetPokedex
+import co.cesarnorena.pokedex.data.repository.RoomRepository
+import co.cesarnorena.pokedex.domain.interactors.GetPokedexEntries
 import co.cesarnorena.pokedex.domain.repository.LocalRepository
-import co.cesarnorena.pokedex.domain.repository.RemoteRepository
 
 class PokemonListFragment : Fragment(), PokemonListContract.View {
 
@@ -55,13 +51,11 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     private fun setupInjection() {
-        val remote: RemoteRepository = PokemonRepository(ServiceFactory
-                .create(PokemonService::class.java, PokemonService.BASE_URL))
+        val local: LocalRepository = RoomRepository(context)
 
-        val local: LocalRepository = RealmRepository()
+        val getLocalPokedex = GetPokedexEntries(local)
 
-        val getPokedex = GetPokedex(remote, local)
-        presenter = PokemonListPresenter(this, getPokedex)
+        presenter = PokemonListPresenter(this, getLocalPokedex)
     }
 
     override fun setupList(pokemonList: List<PokedexEntry>) {

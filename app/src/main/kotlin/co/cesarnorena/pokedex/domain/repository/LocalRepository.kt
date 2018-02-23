@@ -2,6 +2,7 @@ package co.cesarnorena.pokedex.domain.repository
 
 import co.cesarnorena.pokedex.data.model.PokedexEntry
 import co.cesarnorena.pokedex.data.model.Pokemon
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface LocalRepository {
