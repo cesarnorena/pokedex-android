@@ -13,8 +13,6 @@ import co.cesarnorena.pokedex.domain.interactors.CkeckDatabase
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
 import co.cesarnorena.pokedex.domain.repository.LocalRepository
 import co.cesarnorena.pokedex.domain.repository.RemoteRepository
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
 
 class SplashActivity : AppCompatActivity(), SplashContract.View {
 
@@ -47,14 +45,6 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
     override fun navigateToPokemonList() {
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         finish()
-    }
-
-    private fun startActivityWithDelay() {
-        launch {
-            delay(3500)
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            finish()
-        }
     }
 
 }
