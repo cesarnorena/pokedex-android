@@ -4,17 +4,10 @@ import co.cesarnorena.pokedex.data.model.Pokemon
 import co.cesarnorena.pokedex.domain.repository.RemoteRepository
 import io.reactivex.Single
 
-class GetPokemon(private val remoteRepository: RemoteRepository)
-    : SingleUseCase<GetPokemon.Input, GetPokemon.Output>() {
+class GetPokemon(private val remoteRepository: RemoteRepository) {
 
-    override fun executeUseCase(values: Input?): Single<Output> {
-        if (values == null) return Single.error { IllegalStateException() }
-        return remoteRepository.getPokemon(values.id)
-                .map { Output(it) }
+    fun execute(id: Int): Single<Pokemon> {
+        return remoteRepository.getPokemon(id).map { it }
     }
-
-    data class Input(val id: Int) : SingleUseCase.Input
-
-    data class Output(val pokemon: Pokemon) : SingleUseCase.Output
 
 }
