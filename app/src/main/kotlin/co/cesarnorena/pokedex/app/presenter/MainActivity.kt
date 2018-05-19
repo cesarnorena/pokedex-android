@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupInjection()
-        presenter.onCreate()
+        presenter.onCreateView()
     }
 
     private fun setupInjection() {
@@ -28,11 +28,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showPokemonDetail(id: Int) {
-        val args = Bundle()
-        args.putInt(Pokemon.ID, id)
+        val bundle = Bundle()
+                .apply {
+                    putInt(Pokemon.ID, id)
+                }
 
         val fragment = PokemonDetailFragment()
-        fragment.arguments = args
+                .apply {
+                    arguments = bundle
+                }
 
         addFragment(fragment, R.id.main_fragment_container, true)
     }

@@ -9,7 +9,7 @@ import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
 import co.cesarnorena.pokedex.data.repository.PokemonRepository
 import co.cesarnorena.pokedex.data.repository.RoomRepository
-import co.cesarnorena.pokedex.domain.interactors.CkeckDatabase
+import co.cesarnorena.pokedex.domain.interactors.CheckDatabase
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
 import co.cesarnorena.pokedex.domain.repository.LocalRepository
 import co.cesarnorena.pokedex.domain.repository.RemoteRepository
@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
 
         val local: LocalRepository = RoomRepository(this)
 
-        val checkDatabase = CkeckDatabase(local)
+        val checkDatabase = CheckDatabase(local)
         val getPokedex = GetPokedex(remote, local)
 
         presenter = SplashPresenter(this, checkDatabase, getPokedex)
