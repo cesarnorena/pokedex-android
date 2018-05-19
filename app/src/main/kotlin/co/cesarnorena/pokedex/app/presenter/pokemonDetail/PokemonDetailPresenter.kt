@@ -18,9 +18,8 @@ class PokemonDetailPresenter(private val view: PokemonDetailContract.View,
 
     private fun getPokemon(id: Int) {
         view.showProgress(true)
-        val request = GetPokemon.Input(id)
-        mDisposable = getPokemon.execute(request).subscribe(
-                { (pokemon) ->
+        mDisposable = getPokemon.execute(id).subscribe(
+                { pokemon ->
                     view.showProgress(false)
                     view.updatePokemonData(pokemon)
                 },

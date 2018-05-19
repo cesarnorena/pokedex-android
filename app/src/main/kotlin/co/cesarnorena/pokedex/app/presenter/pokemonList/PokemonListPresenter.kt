@@ -19,7 +19,7 @@ class PokemonListPresenter(private val view: PokemonListContract.View,
 
     private fun getPokedex() {
         mDisposable = getPokedexEntries.execute().subscribe(
-                { (pokedexEntries) ->
+                { pokedexEntries ->
                     view.setupList(pokedexEntries)
                 },
                 { error ->

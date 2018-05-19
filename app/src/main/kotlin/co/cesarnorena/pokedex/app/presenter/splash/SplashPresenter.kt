@@ -30,8 +30,7 @@ class SplashPresenter(private val view: SplashContract.View,
     }
 
     private fun getPokedex() {
-        val request = GetPokedex.Input(1)
-        getPokedex.execute(request)
+        getPokedex.execute(1)
                 .subscribe({ _ ->
                     view.navigateToPokemonList()
                 }, { error ->
