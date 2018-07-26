@@ -8,8 +8,9 @@ import io.reactivex.schedulers.Schedulers
 class CheckDatabase(private val localRepository: LocalRepository) {
 
     fun execute(): Completable {
-        return localRepository.getPokemon(1).toCompletable()
+        return localRepository.getPokemon(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .toCompletable()
     }
 }

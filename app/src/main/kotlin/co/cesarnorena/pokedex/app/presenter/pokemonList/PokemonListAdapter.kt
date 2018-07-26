@@ -18,8 +18,8 @@ import com.bumptech.glide.Glide
 class PokemonListAdapter(private val context: Context, private val pokemonList: List<PokedexEntry>)
     : RecyclerView.Adapter<PokemonListAdapter.ViewHolder>() {
 
-    private val mResources: Resources = context.resources
-    private var mOnItemClick: ((PokedexEntry) -> Any)? = null
+    private val resources: Resources = context.resources
+    private var onItemClick: ((PokedexEntry) -> Any)? = null
 
     override fun getItemCount(): Int = pokemonList.size
 
@@ -35,7 +35,7 @@ class PokemonListAdapter(private val context: Context, private val pokemonList: 
         with(holder) {
             numberView.text = getFormatNumber(pokemon.number)
             nameView.text = pokemon.specie.name
-            containerView.setOnClickListener { mOnItemClick?.invoke(pokemon) }
+            containerView.setOnClickListener { onItemClick?.invoke(pokemon) }
             Glide.with(context).load(pokemon.imageUrl).into(imageView)
         }
     }
@@ -60,12 +60,11 @@ class PokemonListAdapter(private val context: Context, private val pokemonList: 
     }
 
     private fun getFormatNumber(number: Int): String {
-        val format = mResources.getString(R.string.pokemon_number)
+        val format = resources.getString(R.string.pokemon_number)
         return String.format(format, Pokemon.getFormattedId(number))
     }
 
     fun onItemClick(listener: (PokedexEntry) -> Any) {
-        mOnItemClick = listener
+        onItemClick = listener
     }
-
 }

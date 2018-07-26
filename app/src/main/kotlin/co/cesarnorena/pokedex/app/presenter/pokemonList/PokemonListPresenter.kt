@@ -7,14 +7,14 @@ class PokemonListPresenter(private val view: PokemonListContract.View,
                            private val getPokedexEntries: GetPokedexEntries)
     : PokemonListContract.Presenter {
 
-    private var mDisposable = CompositeDisposable()
+    private var disposable = CompositeDisposable()
 
     override fun onCreateView() {
         getPokedex()
     }
 
     override fun onDestroyView() {
-        mDisposable.dispose()
+        disposable.dispose()
     }
 
     private fun getPokedex() {
@@ -25,12 +25,11 @@ class PokemonListPresenter(private val view: PokemonListContract.View,
                     view.showNoInternetMessage(true)
                     error.printStackTrace()
                 }).also {
-                    mDisposable.add(it)
+                    disposable.add(it)
                 }
     }
 
     override fun onPokemonItemClick(pokemonId: Int) {
         view.navigatePokemonDetail(pokemonId)
     }
-
 }
