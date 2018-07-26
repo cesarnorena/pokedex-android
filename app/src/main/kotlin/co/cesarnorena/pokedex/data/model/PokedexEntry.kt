@@ -1,6 +1,6 @@
 package co.cesarnorena.pokedex.data.model
 
-import co.cesarnorena.pokedex.data.remote.PokemonService
+import co.cesarnorena.pokedex.data.repository.remote.PokemonService
 import com.google.gson.annotations.SerializedName
 
 data class PokedexEntry(

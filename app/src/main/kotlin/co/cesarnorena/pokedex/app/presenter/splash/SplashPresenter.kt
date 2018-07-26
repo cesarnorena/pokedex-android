@@ -1,16 +1,20 @@
 package co.cesarnorena.pokedex.app.presenter.splash
 
-import co.cesarnorena.pokedex.domain.interactors.CheckDatabase
-import co.cesarnorena.pokedex.domain.interactors.GetPokedex
+import co.cesarnorena.pokedex.domain.usecases.CheckDatabase
+import co.cesarnorena.pokedex.domain.usecases.GetPokedex
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class SplashPresenter(private val view: SplashContract.View,
-                      private val checkDatabase: CheckDatabase,
-                      private val getPokedex: GetPokedex) : SplashContract.Presenter {
+class SplashPresenter @Inject constructor(
+        private val checkDatabase: CheckDatabase,
+        private val getPokedex: GetPokedex
+) : SplashContract.Presenter {
 
+    private var view: SplashContract.View? = null
     private var mDisposable = CompositeDisposable()
 
-    override fun onCreateView() {
+    override fun onCreateView(view: SplashContract.View) {
+        this.view = view
         checkDatabase()
     }
 
@@ -21,7 +25,7 @@ class SplashPresenter(private val view: SplashContract.View,
     private fun checkDatabase() {
         checkDatabase.execute()
                 .subscribe({
-                    view.navigateToPokemonList()
+                    view?.navigateToPokemonList()
                 }, {
                     getPokedex()
                 }).also {
@@ -32,7 +36,7 @@ class SplashPresenter(private val view: SplashContract.View,
     private fun getPokedex() {
         getPokedex.execute(1)
                 .subscribe({ _ ->
-                    view.navigateToPokemonList()
+                    view?.navigateToPokemonList()
                 }, { error ->
                     error.printStackTrace()
                 }).also {

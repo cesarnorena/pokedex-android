@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="co.cesarnorena.pokedex.app.presenter.MainActivity" />
+        <activity android:name="co.cesarnorena.pokedex.app.presenter.home.HomeActivity" />
 
     </application>
 

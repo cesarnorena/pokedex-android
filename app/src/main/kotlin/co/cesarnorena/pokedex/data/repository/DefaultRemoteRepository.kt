@@ -2,12 +2,14 @@ package co.cesarnorena.pokedex.data.repository
 
 import co.cesarnorena.pokedex.data.model.Pokedex
 import co.cesarnorena.pokedex.data.model.Pokemon
-import co.cesarnorena.pokedex.data.remote.PokemonService
-import co.cesarnorena.pokedex.data.remote.client.HttpStatus
+import co.cesarnorena.pokedex.data.repository.remote.PokemonService
+import co.cesarnorena.pokedex.data.repository.remote.client.HttpStatus
 import co.cesarnorena.pokedex.domain.repository.RemoteRepository
 import io.reactivex.Single
 
-class DefaultRemoteRepository(private val pokemonService: PokemonService) : RemoteRepository {
+class DefaultRemoteRepository(
+        private val pokemonService: PokemonService
+) : RemoteRepository {
 
     override fun getPokedex(id: Int): Single<Pokedex> {
         return pokemonService.getPokedex(id).map { response ->

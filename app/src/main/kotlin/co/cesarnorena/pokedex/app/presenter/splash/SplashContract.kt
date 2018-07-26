@@ -7,8 +7,7 @@ interface SplashContract {
     }
 
     interface Presenter {
-        fun onCreateView()
+        fun onCreateView(view: View)
         fun onDestroyView()
     }
-
 }
