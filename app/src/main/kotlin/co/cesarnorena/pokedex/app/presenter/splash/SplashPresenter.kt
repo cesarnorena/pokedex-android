@@ -39,5 +39,4 @@ class SplashPresenter(private val view: SplashContract.View,
                     mDisposable.add(it)
                 }
     }
-
 }

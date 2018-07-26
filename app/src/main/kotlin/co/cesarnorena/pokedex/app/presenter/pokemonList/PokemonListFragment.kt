@@ -40,9 +40,9 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         return view
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
         presenter.onDestroyView()
+        super.onDestroyView()
     }
 
     private fun setupToolbar() {

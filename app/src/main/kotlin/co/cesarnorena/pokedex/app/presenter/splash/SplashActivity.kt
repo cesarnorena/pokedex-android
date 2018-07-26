@@ -25,8 +25,8 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.onDestroyView()
+        super.onDestroy()
     }
 
     private fun setupInjection() {

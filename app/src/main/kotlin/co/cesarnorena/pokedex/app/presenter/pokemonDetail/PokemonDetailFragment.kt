@@ -63,9 +63,9 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
         return view
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
         presenter.onDestroyView()
+        super.onDestroyView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

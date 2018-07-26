@@ -11,10 +11,10 @@ class GetPokedex(private val remoteRepository: RemoteRepository,
 
     fun execute(id: Int): Single<Boolean> {
         return remoteRepository.getPokedex(id)
-                .flatMap {
-                    localRepository.savePokedex(it.pokedexEntries)
-                            .map { true }
-                }.subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .flatMap {
+                    localRepository.savePokedex(it.pokedexEntries).map { true }
+                }
     }
 }
