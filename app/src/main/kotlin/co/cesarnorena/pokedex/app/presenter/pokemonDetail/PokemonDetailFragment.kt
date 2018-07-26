@@ -17,9 +17,11 @@ import co.cesarnorena.pokedex.app.presenter.MainActivity
 import co.cesarnorena.pokedex.data.model.Pokemon
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
-import co.cesarnorena.pokedex.data.repository.PokemonRepository
+import co.cesarnorena.pokedex.data.repository.DefaultRemoteRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokemon
 import com.bumptech.glide.Glide
+
+private const val POKEMON_ID = "pokemonId"
 
 class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
 
@@ -40,12 +42,23 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
 
     lateinit var presenter: PokemonDetailContract.Presenter
 
+    companion object {
+        fun newInstance(pokemonId: Int): PokemonDetailFragment {
+            val bundle = Bundle().apply {
+                putInt(POKEMON_ID, pokemonId)
+            }
+            return PokemonDetailFragment().apply {
+                arguments = bundle
+            }
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
         ButterKnife.bind(this, view)
         setupToolbar()
         setupInjection()
-        val id = arguments.getInt(Pokemon.ID)
+        val id = arguments.getInt(POKEMON_ID)
         presenter.onCreateView(id)
         return view
     }
@@ -72,9 +85,9 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
     }
 
     private fun setupInjection() {
-        val pokemonService = ServiceFactory.create(PokemonService::class.java, PokemonService.BASE_URL)
-        val remote = PokemonRepository(pokemonService)
-        val getPokemon = GetPokemon(remote)
+        val pokemonService = ServiceFactory.create<PokemonService>(PokemonService.BASE_URL)
+        val pokemonRepository = DefaultRemoteRepository(pokemonService)
+        val getPokemon = GetPokemon(pokemonRepository)
         presenter = PokemonDetailPresenter(this, getPokemon)
     }
 
@@ -91,5 +104,4 @@ class PokemonDetailFragment : Fragment(), PokemonDetailContract.View {
     private fun getFormatNumber(number: Int): String {
         return String.format(resources.getString(R.string.pokemon_number), Pokemon.getFormattedId(number))
     }
-
 }

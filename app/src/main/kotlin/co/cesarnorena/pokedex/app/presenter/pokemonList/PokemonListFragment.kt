@@ -15,9 +15,8 @@ import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.MainActivity
 import co.cesarnorena.pokedex.data.model.PokedexEntry
-import co.cesarnorena.pokedex.data.repository.RoomRepository
+import co.cesarnorena.pokedex.data.repository.DefaultLocalRepository
 import co.cesarnorena.pokedex.domain.interactors.GetPokedexEntries
-import co.cesarnorena.pokedex.domain.repository.LocalRepository
 
 class PokemonListFragment : Fragment(), PokemonListContract.View {
 
@@ -51,10 +50,8 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     private fun setupInjection() {
-        val local: LocalRepository = RoomRepository(context)
-
-        val getLocalPokedex = GetPokedexEntries(local)
-
+        val localRepository = DefaultLocalRepository(context)
+        val getLocalPokedex = GetPokedexEntries(localRepository)
         presenter = PokemonListPresenter(this, getLocalPokedex)
     }
 
@@ -77,5 +74,4 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     override fun getContext(): Context = activity
-
 }

@@ -6,7 +6,6 @@ import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.pokemonDetail.PokemonDetailFragment
 import co.cesarnorena.pokedex.app.presenter.pokemonList.PokemonListFragment
 import co.cesarnorena.pokedex.app.utils.extensions.addFragment
-import co.cesarnorena.pokedex.data.model.Pokemon
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -28,17 +27,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showPokemonDetail(id: Int) {
-        val bundle = Bundle()
-                .apply {
-                    putInt(Pokemon.ID, id)
-                }
-
-        val fragment = PokemonDetailFragment()
-                .apply {
-                    arguments = bundle
-                }
-
+        val fragment = PokemonDetailFragment.newInstance(id)
         addFragment(fragment, R.id.main_fragment_container, true)
     }
-
 }

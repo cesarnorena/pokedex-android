@@ -49,5 +49,4 @@ object HttpStatus {
     val INTERNAL_SERVER_ERROR = 500
     /** 503 Service Unavailable (HTTP/1.0 - RFC 1945)  */
     val SERVICE_UNAVAILABLE = 503
-
 }

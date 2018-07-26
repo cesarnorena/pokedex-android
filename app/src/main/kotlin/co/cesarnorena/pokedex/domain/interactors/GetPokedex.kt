@@ -17,5 +17,4 @@ class GetPokedex(private val remoteRepository: RemoteRepository,
                 }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-
 }

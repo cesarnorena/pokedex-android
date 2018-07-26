@@ -9,7 +9,7 @@ import co.cesarnorena.pokedex.data.model.Specie
 import co.cesarnorena.pokedex.domain.repository.LocalRepository
 import io.reactivex.Single
 
-class RoomRepository(context: Context) : LocalRepository {
+class DefaultLocalRepository(context: Context) : LocalRepository {
 
     private val pokemonDao = PokedexDatabase.getPokemonDao(context)
 

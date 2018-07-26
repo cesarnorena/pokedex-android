@@ -13,5 +13,4 @@ class GetPokedexEntries(private val localRepository: LocalRepository) {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-
 }

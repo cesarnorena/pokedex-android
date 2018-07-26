@@ -11,5 +11,4 @@ interface LocalRepository {
     fun getPokedex(): Single<List<PokedexEntry>>
     fun savePokemon(pokemon: Pokemon)
     fun getPokemon(id: Int): Single<Pokemon>
-
 }

@@ -9,5 +9,4 @@ class GetPokemon(private val remoteRepository: RemoteRepository) {
     fun execute(id: Int): Single<Pokemon> {
         return remoteRepository.getPokemon(id).map { it }
     }
-
 }

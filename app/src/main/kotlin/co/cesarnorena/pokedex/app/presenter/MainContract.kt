@@ -10,5 +10,4 @@ interface MainContract {
     interface Presenter {
         fun onCreateView()
     }
-
 }

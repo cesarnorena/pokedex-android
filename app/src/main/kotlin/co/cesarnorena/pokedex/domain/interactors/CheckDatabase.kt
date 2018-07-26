@@ -12,5 +12,4 @@ class CheckDatabase(private val localRepository: LocalRepository) {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-
 }

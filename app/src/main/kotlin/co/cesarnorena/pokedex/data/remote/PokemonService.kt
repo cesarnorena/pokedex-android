@@ -7,6 +7,8 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+const val BASE_URL = "http://pokeapi.co/api/v2/"
+
 interface PokemonService {
 
     companion object {
@@ -24,5 +26,4 @@ interface PokemonService {
 
     @GET("pokemon-species/{id}")
     fun getPokemon(@Path("id") id: Int): Single<Response<Pokemon>>
-
 }

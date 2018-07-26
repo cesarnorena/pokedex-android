@@ -15,5 +15,4 @@ interface PokemonListContract {
         fun onDestroyView()
         fun onPokemonItemClick(pokemonId: Int)
     }
-
 }

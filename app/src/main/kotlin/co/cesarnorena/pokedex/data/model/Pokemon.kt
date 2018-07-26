@@ -3,14 +3,14 @@ package co.cesarnorena.pokedex.data.model
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import com.google.gson.annotations.SerializedName
 
-data class Pokemon(@SerializedName("id") val id: Int,
-                   @SerializedName("name") val name: String) {
+data class Pokemon(
+        @SerializedName("id") val id: Int,
+        @SerializedName("name") val name: String
+) {
 
     val imageUrl: String get() = PokemonService.getLargeImageUrl(getFormattedId(id))
 
     companion object {
-        const val ID = "id"
-
         fun getFormattedId(id: Int): String {
             return when {
                 id < 10 -> "00$id"
@@ -19,5 +19,4 @@ data class Pokemon(@SerializedName("id") val id: Int,
             }
         }
     }
-
 }

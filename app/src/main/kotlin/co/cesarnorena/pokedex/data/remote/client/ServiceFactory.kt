@@ -9,17 +9,16 @@ class ServiceFactory {
 
     companion object {
 
-        fun <T> create(clazz: Class<T>, endPoint: String): T {
+        inline fun <reified T> create(apiUrl: String): T {
             val httpClientBuilder = OkHttpClient.Builder()
 
             val retrofit = Retrofit.Builder()
-                    .baseUrl(endPoint)
+                    .baseUrl(apiUrl)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClientBuilder.build())
                     .build()
-            return retrofit.create(clazz)
+            return retrofit.create(T::class.java)
         }
     }
-
 }

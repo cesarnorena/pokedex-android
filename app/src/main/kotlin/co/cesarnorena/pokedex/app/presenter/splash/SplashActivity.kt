@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.MainActivity
+import co.cesarnorena.pokedex.data.remote.BASE_URL
 import co.cesarnorena.pokedex.data.remote.PokemonService
 import co.cesarnorena.pokedex.data.remote.client.ServiceFactory
-import co.cesarnorena.pokedex.data.repository.PokemonRepository
-import co.cesarnorena.pokedex.data.repository.RoomRepository
+import co.cesarnorena.pokedex.data.repository.DefaultLocalRepository
+import co.cesarnorena.pokedex.data.repository.DefaultRemoteRepository
 import co.cesarnorena.pokedex.domain.interactors.CheckDatabase
 import co.cesarnorena.pokedex.domain.interactors.GetPokedex
-import co.cesarnorena.pokedex.domain.repository.LocalRepository
-import co.cesarnorena.pokedex.domain.repository.RemoteRepository
 
 class SplashActivity : AppCompatActivity(), SplashContract.View {
 
@@ -31,13 +30,12 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
     }
 
     private fun setupInjection() {
-        val remote: RemoteRepository = PokemonRepository(ServiceFactory
-                .create(PokemonService::class.java, PokemonService.BASE_URL))
+        val pokemonService = ServiceFactory.create<PokemonService>(BASE_URL)
+        val remoteRepository = DefaultRemoteRepository(pokemonService)
+        val localRepository = DefaultLocalRepository(this)
 
-        val local: LocalRepository = RoomRepository(this)
-
-        val checkDatabase = CheckDatabase(local)
-        val getPokedex = GetPokedex(remote, local)
+        val checkDatabase = CheckDatabase(localRepository)
+        val getPokedex = GetPokedex(remoteRepository, localRepository)
 
         presenter = SplashPresenter(this, checkDatabase, getPokedex)
     }
@@ -46,5 +44,4 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         finish()
     }
-
 }
