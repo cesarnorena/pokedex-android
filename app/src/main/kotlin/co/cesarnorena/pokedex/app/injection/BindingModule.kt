@@ -1,9 +1,7 @@
 package co.cesarnorena.pokedex.app.injection
 
-import co.cesarnorena.pokedex.app.presenter.detail.PokemonDetailFragment
 import co.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import co.cesarnorena.pokedex.app.presenter.home.injection.HomeModule
-import co.cesarnorena.pokedex.app.presenter.list.PokemonListFragment
 import co.cesarnorena.pokedex.app.presenter.splash.SplashActivity
 import co.cesarnorena.pokedex.app.presenter.splash.injection.SplashModule
 import dagger.Module

@@ -8,16 +8,16 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class GetPokedex @Inject constructor(
-        private val remoteRepository: RemoteRepository,
-        private val localRepository: LocalRepository
+    private val remoteRepository: RemoteRepository,
+    private val localRepository: LocalRepository
 ) {
 
     fun execute(id: Int): Single<Boolean> {
         return remoteRepository.getPokedex(id)
-                .flatMap { pokedex ->
-                    localRepository.savePokedex(pokedex.pokedexEntries).map { true }
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .flatMap { pokedex ->
+                localRepository.savePokedex(pokedex.pokedexEntries).map { true }
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }

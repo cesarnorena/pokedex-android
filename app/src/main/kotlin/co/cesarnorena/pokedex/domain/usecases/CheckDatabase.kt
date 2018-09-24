@@ -7,13 +7,13 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class CheckDatabase @Inject constructor(
-        private val localRepository: LocalRepository
+    private val localRepository: LocalRepository
 ) {
 
     fun execute(): Completable {
         return localRepository.getPokemon(1)
-                .toCompletable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .toCompletable()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }

@@ -8,7 +8,7 @@ import co.cesarnorena.pokedex.domain.repository.RemoteRepository
 import io.reactivex.Single
 
 class DefaultRemoteRepository(
-        private val pokemonService: PokemonService
+    private val pokemonService: PokemonService
 ) : RemoteRepository {
 
     override fun getPokedex(id: Int): Single<Pokedex> {

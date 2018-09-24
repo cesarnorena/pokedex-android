@@ -4,8 +4,8 @@ import co.cesarnorena.pokedex.data.repository.remote.PokemonService
 import com.google.gson.annotations.SerializedName
 
 data class Pokemon(
-        @SerializedName("id") val id: Int,
-        @SerializedName("name") val name: String
+    @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String
 ) {
 
     val imageUrl: String get() = PokemonService.getLargeImageUrl(getFormattedId(id))

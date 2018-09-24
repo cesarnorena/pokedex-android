@@ -8,12 +8,12 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class GetPokedexEntries @Inject constructor(
-        private val localRepository: LocalRepository
+    private val localRepository: LocalRepository
 ) {
 
     fun execute(): Single<List<PokedexEntry>> {
         return localRepository.getPokedex()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }

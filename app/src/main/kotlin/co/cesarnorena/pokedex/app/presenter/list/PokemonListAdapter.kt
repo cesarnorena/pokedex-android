@@ -25,7 +25,7 @@ class PokemonListAdapter(private val context: Context, private val pokemonList: 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_pokemon_list, parent, false)
+            .inflate(R.layout.item_pokemon_list, parent, false)
         return ViewHolder(view)
     }
 

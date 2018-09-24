@@ -32,12 +32,12 @@ abstract class HomeModule {
     @FragmentScoped
     @Binds
     abstract fun bindPokemonListPresenter(
-            PokemonListPresenter: PokemonListPresenter
+        PokemonListPresenter: PokemonListPresenter
     ): PokemonListContract.Presenter
 
     @FragmentScoped
     @Binds
     abstract fun bindPokemonDetailPresenter(
-            pokemonDetailPresenter: PokemonDetailPresenter
+        pokemonDetailPresenter: PokemonDetailPresenter
     ): PokemonDetailContract.Presenter
 }

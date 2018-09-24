@@ -31,8 +31,11 @@ class PokemonListFragment : DaggerFragment(), PokemonListContract.View {
     @Inject
     lateinit var presenter: PokemonListContract.Presenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.fragment_pokemon_list, container, false)
         ButterKnife.bind(this, view)
         setupToolbar()

@@ -5,7 +5,7 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class PokemonListPresenter @Inject constructor(
-        private val getPokedexEntries: GetPokedexEntries
+    private val getPokedexEntries: GetPokedexEntries
 ) : PokemonListContract.Presenter {
 
     private var view: PokemonListContract.View? = null
@@ -23,14 +23,14 @@ class PokemonListPresenter @Inject constructor(
 
     private fun getPokedex() {
         getPokedexEntries.execute()
-                .subscribe({ pokedexEntries ->
-                    view?.setupList(pokedexEntries)
-                }, { error ->
-                    view?.showNoInternetMessage(true)
-                    error.printStackTrace()
-                }).also {
-                    disposable.add(it)
-                }
+            .subscribe({ pokedexEntries ->
+                view?.setupList(pokedexEntries)
+            }, { error ->
+                view?.showNoInternetMessage(true)
+                error.printStackTrace()
+            }).also {
+                disposable.add(it)
+            }
     }
 
     override fun onPokemonItemClick(pokemonId: Int) {

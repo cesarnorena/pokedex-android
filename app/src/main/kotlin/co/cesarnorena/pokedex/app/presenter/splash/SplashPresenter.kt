@@ -6,8 +6,8 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class SplashPresenter @Inject constructor(
-        private val checkDatabase: CheckDatabase,
-        private val getPokedex: GetPokedex
+    private val checkDatabase: CheckDatabase,
+    private val getPokedex: GetPokedex
 ) : SplashContract.Presenter {
 
     private var view: SplashContract.View? = null
@@ -24,23 +24,23 @@ class SplashPresenter @Inject constructor(
 
     private fun checkDatabase() {
         checkDatabase.execute()
-                .subscribe({
-                    view?.navigateToPokemonList()
-                }, {
-                    getPokedex()
-                }).also {
-                    mDisposable.add(it)
-                }
+            .subscribe({
+                view?.navigateToPokemonList()
+            }, {
+                getPokedex()
+            }).also {
+                mDisposable.add(it)
+            }
     }
 
     private fun getPokedex() {
         getPokedex.execute(1)
-                .subscribe({ _ ->
-                    view?.navigateToPokemonList()
-                }, { error ->
-                    error.printStackTrace()
-                }).also {
-                    mDisposable.add(it)
-                }
+            .subscribe({ _ ->
+                view?.navigateToPokemonList()
+            }, { error ->
+                error.printStackTrace()
+            }).also {
+                mDisposable.add(it)
+            }
     }
 }

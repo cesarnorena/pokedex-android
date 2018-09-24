@@ -16,7 +16,7 @@ abstract class LocalModule {
 
     @Binds
     abstract fun bindLocalRepository(
-            defaultLocalRepository: DefaultLocalRepository
+        defaultLocalRepository: DefaultLocalRepository
     ): LocalRepository
 }
 

@@ -5,7 +5,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class PokemonDetailPresenter @Inject constructor(
-        private val getPokemon: GetPokemon
+    private val getPokemon: GetPokemon
 ) : PokemonDetailContract.Presenter {
 
     private var view: PokemonDetailContract.View? = null
@@ -23,15 +23,15 @@ class PokemonDetailPresenter @Inject constructor(
     private fun getPokemon(id: Int) {
         view?.showProgress(true)
         getPokemon.execute(id)
-                .subscribe({ pokemon ->
-                    view?.showProgress(false)
-                    view?.updatePokemonData(pokemon)
-                }, {
-                    view?.showProgress(false)
-                    it.printStackTrace()
-                })
-                .also {
-                    disposable = it
-                }
+            .subscribe({ pokemon ->
+                view?.showProgress(false)
+                view?.updatePokemonData(pokemon)
+            }, {
+                view?.showProgress(false)
+                it.printStackTrace()
+            })
+            .also {
+                disposable = it
+            }
     }
 }
