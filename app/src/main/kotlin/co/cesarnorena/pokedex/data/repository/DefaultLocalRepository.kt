@@ -15,14 +15,12 @@ class DefaultLocalRepository @Inject constructor(context: Context) : LocalReposi
     private val pokemonDao = PokedexDatabase.getPokemonDao(context)
 
     override fun savePokedex(list: List<PokedexEntry>): Single<Unit> {
-        return Single.create {
-
+        return Single.create { emitter ->
             val pokemonList = list.map {
                 PokemonEntity(it.number, it.specie.name)
             }
             pokemonDao.saveAll(pokemonList)
-
-            it.onSuccess(Unit)
+            emitter.onSuccess(Unit)
         }
     }
 

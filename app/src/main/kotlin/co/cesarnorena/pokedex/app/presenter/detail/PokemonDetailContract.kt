@@ -10,7 +10,7 @@ interface PokemonDetailContract {
     }
 
     interface Presenter {
-        fun onCreateView(view: View, pokemonId: Int?)
+        fun onCreateView(view: View, pokemonId: Int)
         fun onDestroyView()
     }
 }

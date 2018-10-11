@@ -10,10 +10,8 @@ import javax.inject.Inject
 class GetPokemon @Inject constructor(
     private val remoteRepository: RemoteRepository
 ) {
-
-    fun execute(id: Int): Single<Pokemon> {
+    operator fun invoke(id: Int): Single<Pokemon> {
         return remoteRepository.getPokemon(id)
-            .map { it }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

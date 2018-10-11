@@ -18,8 +18,6 @@ import com.bumptech.glide.Glide
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-private const val POKEMON_ID = "pokemonId"
-
 class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
 
     @BindView(R.id.pokemon_detail_toolbar)
@@ -37,10 +35,14 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
     @BindView(R.id.pokemon_detail_name)
     lateinit var pokemonName: TextView
 
+    private val pokemonId: Int
+        get() = arguments?.getInt(POKEMON_ID) ?: throw IllegalArgumentException()
+
     @Inject
     lateinit var presenter: PokemonDetailContract.Presenter
 
     companion object {
+        private const val POKEMON_ID = "pokemon_id"
 
         fun newInstance(pokemonId: Int): PokemonDetailFragment {
             val bundle = Bundle().apply {
@@ -60,7 +62,7 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
         val view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
         ButterKnife.bind(this, view)
         setupToolbar()
-        presenter.onCreateView(this, arguments?.getInt(POKEMON_ID))
+        presenter.onCreateView(this, pokemonId)
         return view
     }
 

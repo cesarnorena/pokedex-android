@@ -5,7 +5,6 @@ import co.cesarnorena.pokedex.data.model.Pokemon
 import io.reactivex.Single
 
 interface RemoteRepository {
-
     fun getPokedex(id: Int): Single<Pokedex>
     fun getPokemon(id: Int): Single<Pokemon>
 }
