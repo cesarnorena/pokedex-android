@@ -2,17 +2,15 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_pokebola"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="10dp"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@id/text_hello_world"
+        app:layout_constraintBottom_toTopOf="@+id/pokedexTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_autoPlay="true"
@@ -20,7 +18,7 @@
         app:lottie_loop="true" />
 
     <TextView
-        android:id="@+id/text_hello_world"
+        android:id="@+id/pokedexTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"

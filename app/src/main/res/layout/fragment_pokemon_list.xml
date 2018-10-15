@@ -6,27 +6,27 @@
     android:layout_height="match_parent"
     android:background="@color/light_gray">
 
-    <include
-        android:id="@+id/pokemon_list_toolbar"
-        layout="@layout/include_toolbar"
-        android:layout_width="0dp"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:title="@string/fragment_list_title"
+        app:titleTextColor="@color/light_gray" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/pokemon_list_recyclerview"
+        android:id="@+id/pokemonListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pokemon_list_toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/item_pokemon_list" />
 
     <TextView
-        android:id="@+id/pokemon_list_no_internet"
+        android:id="@+id/noInternetMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fragment_list_no_internet"

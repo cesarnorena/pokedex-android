@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pokemon_row_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:clickable="true"
     android:focusable="true">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_padding">
+        android:paddingStart="@dimen/activity_padding"
+        android:paddingTop="@dimen/activity_padding"
+        android:paddingEnd="@dimen/activity_padding">
 
         <ImageView
-            android:id="@+id/pokemon_row_image"
+            android:id="@+id/pokemonImage"
             android:layout_width="@dimen/row_image"
             android:layout_height="@dimen/row_image"
             android:layout_marginEnd="@dimen/minimal_spacing"
             android:contentDescription="@null"
+            app:layout_constraintStart_toStartOf="parent"
             tools:src="@drawable/img_pikachu" />
 
         <TextView
-            android:id="@+id/pokemon_row_number"
+            android:id="@+id/pokemonNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/pokemon_row_image"
+            android:layout_marginStart="@dimen/minimal_spacing"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_large"
-            tools:text="No.052" />
+            app:layout_constraintBottom_toTopOf="@+id/pokemonName"
+            app:layout_constraintStart_toEndOf="@id/pokemonImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="#052" />
 
         <TextView
-            android:id="@+id/pokemon_row_name"
+            android:id="@+id/pokemonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/pokemon_row_number"
-            android:layout_toEndOf="@id/pokemon_row_image"
-            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/minimal_spacing"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_xlarge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pokemonImage"
+            app:layout_constraintTop_toBottomOf="@id/pokemonNumber"
             tools:text="Pikachu" />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

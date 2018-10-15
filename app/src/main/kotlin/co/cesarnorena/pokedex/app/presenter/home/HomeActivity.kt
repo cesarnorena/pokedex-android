@@ -20,11 +20,11 @@ class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
     }
 
     override fun showPokemonList() {
-        addFragment(PokemonListFragment(), R.id.main_fragment_container)
+        addFragment(PokemonListFragment(), R.id.fragmentContainer)
     }
 
     override fun showPokemonDetail(id: Int) {
         val fragment = PokemonDetailFragment.newInstance(id)
-        addFragment(fragment, R.id.main_fragment_container, true)
+        addFragment(fragment, R.id.fragmentContainer, true)
     }
 }

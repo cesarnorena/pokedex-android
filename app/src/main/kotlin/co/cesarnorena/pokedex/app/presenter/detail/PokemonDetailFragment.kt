@@ -1,39 +1,23 @@
 package co.cesarnorena.pokedex.app.presenter.detail
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import co.cesarnorena.pokedex.data.model.Pokemon
 import com.bumptech.glide.Glide
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.pokemonImage
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.pokemonName
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.pokemonNumber
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.progress
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.toolbar
 import javax.inject.Inject
 
 class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
-
-    @BindView(R.id.pokemon_detail_toolbar)
-    lateinit var toolbar: Toolbar
-
-    @BindView(R.id.pokemon_detail_progress)
-    lateinit var progress: ProgressBar
-
-    @BindView(R.id.pokemon_detail_image)
-    lateinit var pokemonImage: ImageView
-
-    @BindView(R.id.pokemon_detail_number)
-    lateinit var pokemonNumber: TextView
-
-    @BindView(R.id.pokemon_detail_name)
-    lateinit var pokemonName: TextView
 
     private val pokemonId: Int
         get() = arguments?.getInt(POKEMON_ID) ?: throw IllegalArgumentException()
@@ -59,11 +43,13 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
-        ButterKnife.bind(this, view)
+        return inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         presenter.onCreateView(this, pokemonId)
-        return view
     }
 
     override fun onDestroyView() {
@@ -80,17 +66,16 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
     }
 
     private fun setupToolbar() {
-        with(activity as HomeActivity) {
-            setHasOptionsMenu(true)
-            setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
         }
     }
 
     override fun updatePokemonData(pokemon: Pokemon) {
         Glide.with(this).load(pokemon.imageUrl).into(pokemonImage)
         pokemonNumber.text = getFormatNumber(pokemon.id)
-        pokemonName.text = pokemon.name
+        pokemonName.text = pokemon.name.capitalize()
+        toolbar.title = pokemon.name.capitalize()
     }
 
     override fun showProgress(show: Boolean) {
@@ -98,7 +83,7 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
     }
 
     private fun getFormatNumber(number: Int): String {
-        val format = resources.getString(R.string.pokemon_number)
+        val format = getString(R.string.pokemon_number)
         return String.format(format, Pokemon.getFormattedId(number))
     }
 }
