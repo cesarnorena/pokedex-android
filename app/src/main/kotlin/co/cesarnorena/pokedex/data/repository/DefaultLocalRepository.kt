@@ -38,7 +38,7 @@ class DefaultLocalRepository @Inject constructor(context: Context) : LocalReposi
 
     override fun getPokemon(id: Int): Single<Pokemon> {
         return pokemonDao.findById(id).map {
-            Pokemon(it.id, it.name)
+            Pokemon(it.id, it.name, emptyList())
         }
     }
 }

@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import co.cesarnorena.pokedex.R
+import co.cesarnorena.pokedex.app.extensions.formattedId
 import co.cesarnorena.pokedex.data.model.PokedexEntry
-import co.cesarnorena.pokedex.data.model.Pokemon
 import com.bumptech.glide.Glide
 
 class PokemonListAdapter(
@@ -40,14 +40,14 @@ class PokemonListAdapter(
         }
     }
 
+    private fun getFormatNumber(number: Int): String {
+        return String.format(numberFormat, number.formattedId())
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val containerView: View = view
         val imageView: ImageView = view.findViewById(R.id.pokemonImage)
         val numberView: TextView = view.findViewById(R.id.pokemonNumber)
         val nameView: TextView = view.findViewById(R.id.pokemonName)
-    }
-
-    private fun getFormatNumber(number: Int): String {
-        return String.format(numberFormat, Pokemon.getFormattedId(number))
     }
 }

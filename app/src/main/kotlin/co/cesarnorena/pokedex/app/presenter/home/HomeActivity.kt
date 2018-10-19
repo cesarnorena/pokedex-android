@@ -2,9 +2,9 @@ package co.cesarnorena.pokedex.app.presenter.home
 
 import android.os.Bundle
 import co.cesarnorena.pokedex.R
+import co.cesarnorena.pokedex.app.extensions.addFragment
 import co.cesarnorena.pokedex.app.presenter.detail.PokemonDetailFragment
 import co.cesarnorena.pokedex.app.presenter.list.PokemonListFragment
-import co.cesarnorena.pokedex.app.utils.extensions.addFragment
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -24,6 +24,11 @@ class HomeActivity : DaggerAppCompatActivity(), HomeContract.View {
     }
 
     override fun showPokemonDetail(id: Int) {
+        val fragment = PokemonDetailFragment.newInstance(id)
+        addFragment(fragment, R.id.fragmentContainer, true)
+    }
+
+    override fun changePokemonDetail(id: Int) {
         val fragment = PokemonDetailFragment.newInstance(id)
         addFragment(fragment, R.id.fragmentContainer, true)
     }

@@ -23,6 +23,6 @@ interface PokemonService {
     @GET("pokedex/{id}")
     fun getPokedex(@Path("id") id: Int): Single<Response<Pokedex>>
 
-    @GET("pokemon-species/{id}")
+    @GET("pokemon/{id}")
     fun getPokemon(@Path("id") id: Int): Single<Response<Pokemon>>
 }

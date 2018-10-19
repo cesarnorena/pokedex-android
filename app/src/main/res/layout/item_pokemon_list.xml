@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     android:background="@android:color/white"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:foreground="?android:selectableItemBackground">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/activity_padding"
-        android:paddingTop="@dimen/activity_padding"
-        android:paddingEnd="@dimen/activity_padding">
+        android:paddingTop="@dimen/minimal_spacing"
+        android:paddingEnd="@dimen/activity_padding"
+        android:paddingBottom="@dimen/minimal_spacing">
 
         <ImageView
             android:id="@+id/pokemonImage"
