@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.presenter.list
+package co.cesarnorena.pokedex.app.presenter.home.list
 
 import android.content.Context
 import android.os.Bundle
@@ -14,24 +14,34 @@ import kotlinx.android.synthetic.main.fragment_pokemon_list.noInternetMessage
 import kotlinx.android.synthetic.main.fragment_pokemon_list.pokemonListView
 import javax.inject.Inject
 
-class PokemonListFragment : DaggerFragment(), PokemonListContract.View {
+interface PokemonListView {
+    fun setupList(pokemonList: List<PokedexEntry>)
+    fun navigatePokemonDetail(pokemonId: Int)
+    fun showNoInternetMessage(show: Boolean)
+}
 
-    private val homeActivity get() = activity as HomeActivity?
+class PokemonListFragment : DaggerFragment(), PokemonListView {
 
     @Inject
-    lateinit var presenter: PokemonListContract.Presenter
+    lateinit var presenter: PokemonListPresenter
+
+    private val homeActivity get() = activity as HomeActivity?
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_pokemon_list, container, false)
-    }
+    ): View = inflater.inflate(R.layout.fragment_pokemon_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.onCreateView(this)
+        presenter.setView(this)
+        presenter.onCreateView()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        presenter.setView(null)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
@@ -41,7 +51,6 @@ class PokemonListFragment : DaggerFragment(), PokemonListContract.View {
 
     override fun setupList(pokemonList: List<PokedexEntry>) {
         val context: Context = activity ?: return
-
         pokemonListView.layoutManager = LinearLayoutManager(context)
         pokemonListView.adapter = PokemonListAdapter(context, pokemonList) {
             presenter.onPokemonItemClick(it.number)

@@ -6,12 +6,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class HasPokemonListStored @Inject constructor(
+class IsPokedexStored @Inject constructor(
     private val localRepository: LocalRepository
 ) {
     operator fun invoke(): Completable {
         return localRepository.getPokemon(1)
-            .toCompletable()
+            .flatMapCompletable {
+                Completable.complete()
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

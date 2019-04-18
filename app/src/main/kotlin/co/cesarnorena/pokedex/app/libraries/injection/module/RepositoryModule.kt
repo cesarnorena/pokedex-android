@@ -1,23 +1,30 @@
-package co.cesarnorena.pokedex.domain.repository.injection
+package co.cesarnorena.pokedex.app.libraries.injection.module
 
+import android.content.Context
+import co.cesarnorena.pokedex.BuildConfig.BASE_URL
 import co.cesarnorena.pokedex.data.repository.DefaultLocalRepository
 import co.cesarnorena.pokedex.data.repository.DefaultRemoteRepository
-import co.cesarnorena.pokedex.data.repository.remote.BASE_URL
+import co.cesarnorena.pokedex.data.repository.local.PokedexDatabase
+import co.cesarnorena.pokedex.data.repository.local.PokemonDao
 import co.cesarnorena.pokedex.data.repository.remote.PokemonService
 import co.cesarnorena.pokedex.data.repository.remote.client.createRemoteService
 import co.cesarnorena.pokedex.domain.repository.LocalRepository
 import co.cesarnorena.pokedex.domain.repository.RemoteRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-abstract class LocalModule {
+class LocalModule {
 
-    @Binds
-    abstract fun bindLocalRepository(
-        defaultLocalRepository: DefaultLocalRepository
-    ): LocalRepository
+    @Provides
+    fun providePokemonDao(context: Context): PokemonDao {
+        return PokedexDatabase.getPokemonDao(context)
+    }
+
+    @Provides
+    fun provideLocalRepository(pokemonDao: PokemonDao): LocalRepository {
+        return DefaultLocalRepository(pokemonDao)
+    }
 }
 
 @Module

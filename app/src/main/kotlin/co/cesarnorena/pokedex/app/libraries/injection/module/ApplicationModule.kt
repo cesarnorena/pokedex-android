@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.injection
+package co.cesarnorena.pokedex.app.libraries.injection.module
 
 import android.app.Application
 import android.content.Context

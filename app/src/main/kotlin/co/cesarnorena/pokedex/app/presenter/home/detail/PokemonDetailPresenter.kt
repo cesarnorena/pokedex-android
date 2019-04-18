@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.presenter.detail
+package co.cesarnorena.pokedex.app.presenter.home.detail
 
 import co.cesarnorena.pokedex.domain.usecases.GetPokemon
 import io.reactivex.disposables.CompositeDisposable
@@ -6,17 +6,16 @@ import javax.inject.Inject
 
 class PokemonDetailPresenter @Inject constructor(
     private val getPokemon: GetPokemon
-) : PokemonDetailContract.Presenter {
+) {
+    private var view: PokemonDetailView? = null
 
-    private var view: PokemonDetailContract.View? = null
     private val disposable = CompositeDisposable()
 
-    override fun onCreateView(view: PokemonDetailContract.View, pokemonId: Int) {
-        this.view = view
+    fun onCreateView(pokemonId: Int) {
         getPokemonDetails(pokemonId)
     }
 
-    override fun onDestroyView() {
+    fun onDestroyView() {
         disposable.dispose()
     }
 
@@ -32,5 +31,9 @@ class PokemonDetailPresenter @Inject constructor(
         }).also {
             disposable.add(it)
         }
+    }
+
+    fun setView(view: PokemonDetailView?) {
+        this.view = view
     }
 }

@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.presenter.detail
+package co.cesarnorena.pokedex.app.presenter.home.detail
 
 import co.cesarnorena.pokedex.data.model.Pokemon
 

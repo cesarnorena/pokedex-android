@@ -7,15 +7,26 @@ import co.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class SplashActivity : DaggerAppCompatActivity(), SplashContract.View {
+interface SplashView {
+    fun navigateToHomeScreen()
+    fun finishView()
+}
+
+class SplashActivity : DaggerAppCompatActivity(), SplashView {
 
     @Inject
-    lateinit var presenter: SplashContract.Presenter
+    lateinit var presenter: SplashPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activiy_splash)
-        presenter.onCreateView(this)
+        presenter.setView(this)
+        presenter.onCreateView()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        presenter.setView(null)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {
@@ -23,8 +34,11 @@ class SplashActivity : DaggerAppCompatActivity(), SplashContract.View {
         super.onDestroy()
     }
 
-    override fun navigateToPokemonList() {
+    override fun navigateToHomeScreen() {
         startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+    }
+
+    override fun finishView() {
         finish()
     }
 }

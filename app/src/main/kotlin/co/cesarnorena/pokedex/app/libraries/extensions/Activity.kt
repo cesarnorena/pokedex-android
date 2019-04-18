@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.extensions
+package co.cesarnorena.pokedex.app.libraries.extensions
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
@@ -10,7 +10,7 @@ fun AppCompatActivity.addFragment(
     addToBackStack: Boolean = false
 ) {
     with(supportFragmentManager.beginTransaction()) {
-        slideAnimation()
+        showAnimated()
         add(resource, fragment)
         if (addToBackStack) addToBackStack(fragment.tag)
         commit()
@@ -22,17 +22,15 @@ fun AppCompatActivity.replaceFragment(
     resource: Int
 ) {
     with(supportFragmentManager.beginTransaction()) {
-        slideAnimation()
+        showAnimated()
         replace(resource, fragment)
         commit()
     }
 }
 
-fun FragmentTransaction.slideAnimation() {
+fun FragmentTransaction.showAnimated() {
     setCustomAnimations(
-        android.R.anim.slide_in_left,
-        android.R.anim.slide_out_right,
-        android.R.anim.slide_in_left,
-        android.R.anim.slide_out_right
+        android.R.anim.fade_in,
+        android.R.anim.fade_out
     )
 }

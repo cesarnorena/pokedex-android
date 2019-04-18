@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.injection
+package co.cesarnorena.pokedex.app.libraries.injection
 
 import javax.inject.Scope
 

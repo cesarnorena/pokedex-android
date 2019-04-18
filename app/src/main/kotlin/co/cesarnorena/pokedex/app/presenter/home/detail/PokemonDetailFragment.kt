@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.presenter.detail
+package co.cesarnorena.pokedex.app.presenter.home.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import co.cesarnorena.pokedex.R
-import co.cesarnorena.pokedex.app.extensions.formattedId
+import co.cesarnorena.pokedex.app.libraries.extensions.formattedId
 import co.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import co.cesarnorena.pokedex.data.model.Pokemon
 import com.bumptech.glide.Glide
@@ -20,10 +20,17 @@ import kotlinx.android.synthetic.main.fragment_pokemon_detail.progress
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.toolbar
 import javax.inject.Inject
 
-class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
+interface PokemonDetailView {
+    fun updatePokemonData(pokemon: Pokemon)
+    fun showProgress(show: Boolean)
+}
+
+class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
 
     @Inject
-    lateinit var presenter: PokemonDetailContract.Presenter
+    lateinit var presenter: PokemonDetailPresenter
+
+    private val homeActivity get() = activity as HomeActivity?
 
     private val pokemonId: Int by lazy {
         arguments?.getInt(POKEMON_ID) ?: throw IllegalArgumentException()
@@ -46,14 +53,11 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
-    }
+    ): View = inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-        presenter.onCreateView(this, pokemonId)
 
         nextPokemon.setOnClickListener {
             showAnotherPokemon(pokemonId + 1)
@@ -61,6 +65,14 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
         previousPokemon.setOnClickListener {
             showAnotherPokemon(pokemonId - 1)
         }
+
+        presenter.setView(this)
+        presenter.onCreateView(pokemonId)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        presenter.setView(null)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
@@ -70,7 +82,7 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            (activity as HomeActivity).onBackPressed()
+            homeActivity?.onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -95,7 +107,7 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailContract.View {
     }
 
     private fun showAnotherPokemon(pokemonId: Int) {
-        (activity as HomeActivity).changePokemonDetail(pokemonId)
+        homeActivity?.changePokemonDetail(pokemonId)
     }
 
     private fun getFormatNumber(number: Int): String {

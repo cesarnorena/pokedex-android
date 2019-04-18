@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.extensions
+package co.cesarnorena.pokedex.app.libraries.extensions
 
 fun Int.formattedId(): String {
     return when {

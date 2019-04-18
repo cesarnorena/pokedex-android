@@ -2,12 +2,15 @@ package co.cesarnorena.pokedex.app.presenter.home
 
 import javax.inject.Inject
 
-class HomePresenter @Inject constructor() : HomeContract.Presenter {
+class HomePresenter @Inject constructor() {
 
-    var view: HomeContract.View? = null
+    private var view: HomeView? = null
 
-    override fun onCreateView(view: HomeContract.View) {
+    fun onCreateView() {
+        view?.showPokemonList()
+    }
+
+    fun setView(view: HomeView?) {
         this.view = view
-        view.showPokemonList()
     }
 }

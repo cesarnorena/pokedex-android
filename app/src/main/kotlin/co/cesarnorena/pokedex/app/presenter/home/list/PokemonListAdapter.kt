@@ -1,4 +1,4 @@
-package co.cesarnorena.pokedex.app.presenter.list
+package co.cesarnorena.pokedex.app.presenter.home.list
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import co.cesarnorena.pokedex.R
-import co.cesarnorena.pokedex.app.extensions.formattedId
+import co.cesarnorena.pokedex.app.libraries.extensions.formattedId
 import co.cesarnorena.pokedex.data.model.PokedexEntry
 import com.bumptech.glide.Glide
 
