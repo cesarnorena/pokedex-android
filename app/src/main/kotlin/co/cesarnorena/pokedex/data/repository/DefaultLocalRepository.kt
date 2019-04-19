@@ -27,6 +27,10 @@ class DefaultLocalRepository @Inject constructor(
         }
     }
 
+    override fun getPokedexSize(): Int {
+        return pokemonDao.getSize()
+    }
+
     override fun savePokemon(pokemon: Pokemon) {
         pokemonDao.save(PokemonEntity(pokemon.id, pokemon.name))
     }

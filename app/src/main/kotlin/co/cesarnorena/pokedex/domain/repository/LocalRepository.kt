@@ -8,6 +8,7 @@ import io.reactivex.Single
 interface LocalRepository {
     fun savePokedex(list: List<PokedexEntry>): Completable
     fun getPokedex(): Single<List<PokedexEntry>>
+    fun getPokedexSize(): Int
     fun savePokemon(pokemon: Pokemon)
     fun getPokemon(id: Int): Single<Pokemon>
 }

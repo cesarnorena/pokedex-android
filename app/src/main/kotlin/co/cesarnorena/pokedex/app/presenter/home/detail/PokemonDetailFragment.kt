@@ -22,7 +22,8 @@ import javax.inject.Inject
 
 interface PokemonDetailView {
     fun updatePokemonData(pokemon: Pokemon)
-    fun showProgress(show: Boolean)
+    fun showProgress()
+    fun hideProgress()
 }
 
 class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
@@ -31,10 +32,6 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
     lateinit var presenter: PokemonDetailPresenter
 
     private val homeActivity get() = activity as HomeActivity?
-
-    private val pokemonId: Int by lazy {
-        arguments?.getInt(POKEMON_ID) ?: throw IllegalArgumentException()
-    }
 
     companion object {
         private const val POKEMON_ID = "pokemon_id"
@@ -58,16 +55,12 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+        nextPokemon.setOnClickListener { presenter.onNextPokemon() }
+        previousPokemon.setOnClickListener { presenter.onPreviousPokemon() }
 
-        nextPokemon.setOnClickListener {
-            showAnotherPokemon(pokemonId + 1)
-        }
-        previousPokemon.setOnClickListener {
-            showAnotherPokemon(pokemonId - 1)
-        }
-
+        presenter.pokemonId = arguments?.getInt(POKEMON_ID) ?: throw IllegalArgumentException()
         presenter.setView(this)
-        presenter.onCreateView(pokemonId)
+        presenter.onCreateView()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -102,12 +95,12 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
         toolbar.title = pokemon.name.capitalize()
     }
 
-    override fun showProgress(show: Boolean) {
-        progress.visibility = if (show) View.VISIBLE else View.GONE
+    override fun showProgress() {
+        progress.visibility = View.VISIBLE
     }
 
-    private fun showAnotherPokemon(pokemonId: Int) {
-        homeActivity?.changePokemonDetail(pokemonId)
+    override fun hideProgress() {
+        progress.visibility = View.GONE
     }
 
     private fun getFormatNumber(number: Int): String {

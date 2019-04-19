@@ -1,36 +1,50 @@
 package co.cesarnorena.pokedex.app.presenter.home.detail
 
+import co.cesarnorena.pokedex.app.libraries.reactivex.addDisposeBag
+import co.cesarnorena.pokedex.domain.usecases.GetPokedexSize
 import co.cesarnorena.pokedex.domain.usecases.GetPokemon
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class PokemonDetailPresenter @Inject constructor(
-    private val getPokemon: GetPokemon
+    private val getPokemon: GetPokemon,
+    private val getPokedexSize: GetPokedexSize
 ) {
     private var view: PokemonDetailView? = null
 
-    private val disposable = CompositeDisposable()
+    private val disposeBag = CompositeDisposable()
 
-    fun onCreateView(pokemonId: Int) {
+    var pokemonId: Int = 0
+    var pokedexSize: Int = 0
+
+    fun onCreateView() {
+        getPokedexSize().doOnSuccess {
+            pokedexSize = it
+        }.subscribe().addDisposeBag(disposeBag)
         getPokemonDetails(pokemonId)
     }
 
     fun onDestroyView() {
-        disposable.dispose()
+        disposeBag.dispose()
+    }
+
+    fun onNextPokemon() {
+        if (pokemonId < pokedexSize) getPokemonDetails(pokemonId + 1)
+    }
+
+    fun onPreviousPokemon() {
+        if (pokemonId > 1) getPokemonDetails(pokemonId - 1)
     }
 
     private fun getPokemonDetails(id: Int) {
-        view?.showProgress(true)
-
-        getPokemon(id).subscribe({ pokemon ->
-            view?.showProgress(false)
+        getPokemon(id).doOnSubscribe {
+            view?.showProgress()
+        }.doOnSuccess { pokemon ->
             view?.updatePokemonData(pokemon)
-        }, {
-            view?.showProgress(false)
-            it.printStackTrace()
-        }).also {
-            disposable.add(it)
-        }
+            pokemonId = pokemon.id
+        }.doFinally {
+            view?.hideProgress()
+        }.subscribe().addDisposeBag(disposeBag)
     }
 
     fun setView(view: PokemonDetailView?) {

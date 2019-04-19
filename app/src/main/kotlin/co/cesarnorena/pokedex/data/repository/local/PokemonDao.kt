@@ -24,4 +24,7 @@ interface PokemonDao {
 
     @Query("SELECT * FROM pokemon")
     fun getAll(): Single<List<PokemonEntity>>
+
+    @Query("SELECT COUNT(*) FROM pokemon")
+    fun getSize(): Int
 }

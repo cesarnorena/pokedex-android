@@ -1,5 +1,6 @@
 package co.cesarnorena.pokedex.app.presenter.home.list
 
+import co.cesarnorena.pokedex.app.libraries.reactivex.addDisposeBag
 import co.cesarnorena.pokedex.domain.usecases.FetchPokedexEntries
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -7,16 +8,16 @@ import javax.inject.Inject
 class PokemonListPresenter @Inject constructor(
     private val fetchPokedexEntries: FetchPokedexEntries
 ) {
-
     private var view: PokemonListView? = null
-    private val disposable = CompositeDisposable()
+
+    private val disposeBag = CompositeDisposable()
 
     fun onCreateView() {
         getPokedex()
     }
 
     fun onDestroyView() {
-        disposable.dispose()
+        disposeBag.dispose()
     }
 
     private fun getPokedex() {
@@ -24,9 +25,7 @@ class PokemonListPresenter @Inject constructor(
             view?.setupList(pokedexEntries)
         }, {
             view?.showNoInternetMessage(true)
-        }).also {
-            disposable.add(it)
-        }
+        }).addDisposeBag(disposeBag)
     }
 
     fun onPokemonItemClick(pokemonId: Int) {

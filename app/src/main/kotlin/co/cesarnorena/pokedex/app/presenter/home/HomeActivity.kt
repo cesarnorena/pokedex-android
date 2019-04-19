@@ -11,7 +11,6 @@ import javax.inject.Inject
 interface HomeView {
     fun showPokemonList()
     fun showPokemonDetail(id: Int)
-    fun changePokemonDetail(id: Int)
 }
 
 class HomeActivity : DaggerAppCompatActivity(), HomeView {
@@ -36,11 +35,6 @@ class HomeActivity : DaggerAppCompatActivity(), HomeView {
     }
 
     override fun showPokemonDetail(id: Int) {
-        val fragment = PokemonDetailFragment.newInstance(id)
-        addFragment(fragment, R.id.fragmentContainer, true)
-    }
-
-    override fun changePokemonDetail(id: Int) {
         val fragment = PokemonDetailFragment.newInstance(id)
         addFragment(fragment, R.id.fragmentContainer, true)
     }

@@ -1,5 +1,6 @@
 package co.cesarnorena.pokedex.app.presenter.splash
 
+import co.cesarnorena.pokedex.app.libraries.reactivex.addDisposeBag
 import co.cesarnorena.pokedex.domain.usecases.FetchPokedex
 import co.cesarnorena.pokedex.domain.usecases.IsPokedexStored
 import io.reactivex.disposables.CompositeDisposable
@@ -10,16 +11,16 @@ class SplashPresenter @Inject constructor(
     private val isPokedexStored: IsPokedexStored,
     private val fetchPokedex: FetchPokedex
 ) {
-
     private var view: SplashView? = null
-    private var disposable = CompositeDisposable()
+
+    private var disposeBag = CompositeDisposable()
 
     fun onCreateView() {
         checkPreviousData()
     }
 
     fun onDestroyView() {
-        disposable.dispose()
+        disposeBag.dispose()
     }
 
     private fun checkPreviousData() {
@@ -30,9 +31,7 @@ class SplashPresenter @Inject constructor(
                 view?.finishView()
             }, {
                 getPokemonList()
-            }).also {
-                disposable.add(it)
-            }
+            }).addDisposeBag(disposeBag)
     }
 
     private fun getPokemonList() {
@@ -41,9 +40,7 @@ class SplashPresenter @Inject constructor(
             view?.finishView()
         }, { error ->
             error.printStackTrace()
-        }).also {
-            disposable.add(it)
-        }
+        }).addDisposeBag(disposeBag)
     }
 
     fun setView(view: SplashView?) {
