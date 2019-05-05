@@ -5,6 +5,9 @@
     <string name="pokemon_number">#%s</string>
 
     <string name="fragment_list_title">Pokedex</string>
-    <string name="fragment_list_no_internet">No tienes acceso a internet</string>
+    <string name="fragment_list_no_internet">There are internet issues</string>
+
+    <string name="fragment_detail_back_button">Back</string>
+    <string name="fragment_detail_next_button">Next</string>
 
 </resources>

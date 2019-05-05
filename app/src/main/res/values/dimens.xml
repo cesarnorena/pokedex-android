@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="minimal_spacing">10dp</dimen>
-
-    <dimen name="activity_padding">16dp</dimen>
-
-    <dimen name="activity_margin">16dp</dimen>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
-    <dimen name="row_image">64dp</dimen>
-    <dimen name="detail_image">170dp</dimen>
-
     <!-- TEXT SIZE -->
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_large">18sp</dimen>
     <dimen name="text_xlarge">22sp</dimen>
     <dimen name="text_xxlarge">26sp</dimen>
-
 </resources>

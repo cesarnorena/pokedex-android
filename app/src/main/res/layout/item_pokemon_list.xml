@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
     android:background="@android:color/white"
     android:clickable="true"
     android:focusable="true"
@@ -13,25 +16,23 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/activity_padding"
-        android:paddingTop="@dimen/minimal_spacing"
-        android:paddingEnd="@dimen/activity_padding"
-        android:paddingBottom="@dimen/minimal_spacing">
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/pokemonImage"
-            android:layout_width="@dimen/row_image"
-            android:layout_height="@dimen/row_image"
-            android:layout_marginEnd="@dimen/minimal_spacing"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:contentDescription="@null"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@drawable/img_pikachu" />
 
         <TextView
             android:id="@+id/pokemonNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/minimal_spacing"
+            android:layout_marginStart="16dp"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_large"
             app:layout_constraintBottom_toTopOf="@+id/pokemonName"
@@ -44,7 +45,7 @@
             android:id="@+id/pokemonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/minimal_spacing"
+            android:layout_marginStart="16dp"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_xlarge"
             app:layout_constraintBottom_toBottomOf="parent"

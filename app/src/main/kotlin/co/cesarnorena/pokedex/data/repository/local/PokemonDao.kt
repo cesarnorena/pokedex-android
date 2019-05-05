@@ -19,7 +19,7 @@ interface PokemonDao {
     @Update(onConflict = REPLACE)
     fun update(pokemon: PokemonEntity)
 
-    @Query("SELECT * FROM pokemon WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM pokemon WHERE id = :id")
     fun findById(id: Int): Single<PokemonEntity>
 
     @Query("SELECT * FROM pokemon")

@@ -7,7 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class FetchPokedex @Inject constructor(
+class FetchNationalPokedex @Inject constructor(
     private val remoteRepository: RemoteRepository,
     private val localRepository: LocalRepository
 ) {
