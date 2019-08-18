@@ -9,9 +9,9 @@ const val DATABASE_VERSION = 1
 const val DATABASE_NAME = "pokemon_database"
 
 @Database(
-        entities = [PokemonEntity::class],
-        version = DATABASE_VERSION,
-        exportSchema = false
+    entities = [PokemonEntity::class],
+    version = DATABASE_VERSION,
+    exportSchema = false
 )
 abstract class PokedexDatabase : RoomDatabase() {
 
@@ -20,7 +20,7 @@ abstract class PokedexDatabase : RoomDatabase() {
     companion object {
         fun getPokemonDao(context: Context): PokemonDao {
             return Room.databaseBuilder(context, PokedexDatabase::class.java, DATABASE_NAME)
-                    .build().pokemonDao()
+                .build().pokemonDao()
         }
     }
 }

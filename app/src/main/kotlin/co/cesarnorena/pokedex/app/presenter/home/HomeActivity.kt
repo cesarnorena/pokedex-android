@@ -25,7 +25,7 @@ class HomeActivity : DaggerAppCompatActivity(), HomeView {
         presenter.onCreateView()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         presenter.setView(null)
         super.onSaveInstanceState(outState)
     }

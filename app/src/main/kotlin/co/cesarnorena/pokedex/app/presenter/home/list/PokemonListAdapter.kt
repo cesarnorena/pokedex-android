@@ -24,8 +24,8 @@ class PokemonListAdapter(
     override fun getItemCount(): Int = pokemonList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_pokemon_list, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.item_pokemon_list, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,17 +34,17 @@ class PokemonListAdapter(
 
         with(holder) {
             imageLoader.load(pokemon.imageUrl).into(imageView)
-            numberView.text = getFormatNumber(pokemon.number)
+            numberView.text = getFormattedNumber(pokemon.number)
             nameView.text = pokemon.specie.name.capitalize()
             containerView.setOnClickListener { onItemClick.invoke(pokemon) }
         }
     }
 
-    private fun getFormatNumber(number: Int): String {
+    private fun getFormattedNumber(number: Int): String {
         return String.format(numberFormat, number.formattedId())
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val containerView: View = view
         val imageView: ImageView = view.findViewById(R.id.pokemonImage)
         val numberView: TextView = view.findViewById(R.id.pokemonNumber)

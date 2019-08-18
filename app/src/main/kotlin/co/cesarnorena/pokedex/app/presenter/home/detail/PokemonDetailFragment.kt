@@ -22,8 +22,7 @@ import javax.inject.Inject
 
 interface PokemonDetailView {
     fun updatePokemonData(pokemon: Pokemon)
-    fun showProgress()
-    fun hideProgress()
+    fun showProgress(isShown: Boolean)
 }
 
 class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
@@ -90,20 +89,16 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
 
     override fun updatePokemonData(pokemon: Pokemon) {
         Glide.with(this).load(pokemon.imageUrl).into(pokemonImage)
-        pokemonNumber.text = getFormatNumber(pokemon.id)
+        pokemonNumber.text = getFormattedNumber(pokemon.id)
         pokemonName.text = pokemon.name.capitalize()
         toolbar.title = pokemon.name.capitalize()
     }
 
-    override fun showProgress() {
-        progress.visibility = View.VISIBLE
+    override fun showProgress(isShown: Boolean) {
+        progress.visibility = if (isShown) View.VISIBLE else View.GONE
     }
 
-    override fun hideProgress() {
-        progress.visibility = View.GONE
-    }
-
-    private fun getFormatNumber(number: Int): String {
+    private fun getFormattedNumber(number: Int): String {
         return getString(R.string.pokemon_number, number.formattedId())
     }
 }

@@ -15,12 +15,13 @@ class PokemonDetailPresenter @Inject constructor(
     private val disposeBag = CompositeDisposable()
 
     var pokemonId: Int = 0
-    var pokedexSize: Int = 0
+    private var pokedexSize: Int = 0
 
     fun onCreateView() {
         getPokedexSize().doOnSuccess {
             pokedexSize = it
         }.subscribe().addDisposeBag(disposeBag)
+
         getPokemonDetails(pokemonId)
     }
 
@@ -38,12 +39,12 @@ class PokemonDetailPresenter @Inject constructor(
 
     private fun getPokemonDetails(id: Int) {
         getPokemon(id).doOnSubscribe {
-            view?.showProgress()
+            view?.showProgress(true)
         }.doOnSuccess { pokemon ->
             view?.updatePokemonData(pokemon)
             pokemonId = pokemon.id
         }.doFinally {
-            view?.hideProgress()
+            view?.showProgress(false)
         }.subscribe().addDisposeBag(disposeBag)
     }
 

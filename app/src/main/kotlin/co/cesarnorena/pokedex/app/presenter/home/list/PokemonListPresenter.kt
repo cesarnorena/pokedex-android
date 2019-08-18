@@ -21,15 +21,15 @@ class PokemonListPresenter @Inject constructor(
     }
 
     private fun getPokedex() {
-        fetchPokedexEntries().subscribe({ pokedexEntries ->
-            view?.setupList(pokedexEntries)
+        fetchPokedexEntries().subscribe({
+            view?.setupList(it)
         }, {
-            view?.showNoInternetMessage(true)
+            view?.showNoInternetError(true)
         }).addDisposeBag(disposeBag)
     }
 
     fun onPokemonItemClick(pokemonId: Int) {
-        view?.navigatePokemonDetail(pokemonId)
+        view?.showPokemonDetailScreen(pokemonId)
     }
 
     fun setView(view: PokemonListView?) {

@@ -24,7 +24,7 @@ class SplashActivity : DaggerAppCompatActivity(), SplashView {
         presenter.onCreateView()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         presenter.setView(null)
         super.onSaveInstanceState(outState)
     }
@@ -35,7 +35,7 @@ class SplashActivity : DaggerAppCompatActivity(), SplashView {
     }
 
     override fun navigateToHomeScreen() {
-        startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 
     override fun finishView() {

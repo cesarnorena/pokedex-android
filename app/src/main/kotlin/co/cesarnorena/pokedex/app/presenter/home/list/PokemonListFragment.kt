@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 interface PokemonListView {
     fun setupList(pokemonList: List<PokedexEntry>)
-    fun navigatePokemonDetail(pokemonId: Int)
-    fun showNoInternetMessage(show: Boolean)
+    fun showPokemonDetailScreen(pokemonId: Int)
+    fun showNoInternetError(isShown: Boolean)
 }
 
 class PokemonListFragment : DaggerFragment(), PokemonListView {
@@ -57,12 +57,12 @@ class PokemonListFragment : DaggerFragment(), PokemonListView {
         }
     }
 
-    override fun showNoInternetMessage(show: Boolean) {
-        noInternetMessage.visibility = if (show) View.VISIBLE else View.GONE
-        pokemonListView.visibility = if (show) View.GONE else View.VISIBLE
+    override fun showPokemonDetailScreen(pokemonId: Int) {
+        homeActivity?.showPokemonDetail(pokemonId)
     }
 
-    override fun navigatePokemonDetail(pokemonId: Int) {
-        homeActivity?.showPokemonDetail(pokemonId)
+    override fun showNoInternetError(isShown: Boolean) {
+        noInternetMessage.visibility = if (isShown) View.VISIBLE else View.GONE
+        pokemonListView.visibility = if (isShown) View.GONE else View.VISIBLE
     }
 }
