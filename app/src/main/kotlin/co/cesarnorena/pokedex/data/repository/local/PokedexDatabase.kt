@@ -1,9 +1,9 @@
 package co.cesarnorena.pokedex.data.repository.local
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
 const val DATABASE_VERSION = 1
 const val DATABASE_NAME = "pokemon_database"

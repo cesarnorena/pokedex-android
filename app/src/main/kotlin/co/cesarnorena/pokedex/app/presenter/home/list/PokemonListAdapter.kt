@@ -1,12 +1,12 @@
 package co.cesarnorena.pokedex.app.presenter.home.list
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.libraries.extensions.formattedId
 import co.cesarnorena.pokedex.data.model.PokedexEntry

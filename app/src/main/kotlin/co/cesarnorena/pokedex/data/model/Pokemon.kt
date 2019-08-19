@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class Pokemon(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("typeSlots") val typeSlots: List<TypeSlot>
+    @SerializedName("types") val typeSlots: List<TypeSlot>
 ) {
     val imageUrl: String get() = PokemonService.getLargeImageUrl(id.formattedId())
 }

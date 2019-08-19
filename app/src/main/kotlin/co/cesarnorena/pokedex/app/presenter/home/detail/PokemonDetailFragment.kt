@@ -1,14 +1,20 @@
 package co.cesarnorena.pokedex.app.presenter.home.detail
 
+import android.content.res.Resources
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout.LayoutParams
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.libraries.extensions.formattedId
 import co.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import co.cesarnorena.pokedex.data.model.Pokemon
+import co.cesarnorena.pokedex.data.model.TypeSlot
 import com.bumptech.glide.Glide
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.nextPokemon
@@ -18,10 +24,12 @@ import kotlinx.android.synthetic.main.fragment_pokemon_detail.pokemonNumber
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.previousPokemon
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.progress
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.toolbar
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.typeContainer
 import javax.inject.Inject
 
 interface PokemonDetailView {
     fun updatePokemonData(pokemon: Pokemon)
+    fun updatePokemonTypes(types: List<TypeSlot>)
     fun showProgress(isShown: Boolean)
 }
 
@@ -94,11 +102,38 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
         toolbar.title = pokemon.name.capitalize()
     }
 
+    override fun updatePokemonTypes(types: List<TypeSlot>) {
+        typeContainer.removeAllViews()
+        types.forEach {
+            typeContainer.addView(typeView(it.type.name))
+        }
+    }
+
     override fun showProgress(isShown: Boolean) {
         progress.visibility = if (isShown) View.VISIBLE else View.GONE
+    }
+
+    private fun typeView(name: String): TextView {
+        val context = activity ?: throw IllegalArgumentException()
+
+        return TextView(activity).apply {
+            val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+            params.setMargins(0, 0, 16.toPx(), 0)
+            layoutParams = params
+
+            val padding = 16.toPx()
+            setPadding(padding, padding / 2, padding, padding / 2)
+
+            setBackgroundColor(ContextCompat.getColor(context, R.color.colorSecondary))
+            setTypeface(typeface, Typeface.BOLD)
+            setTextColor(ContextCompat.getColor(context, android.R.color.white))
+            text = name.capitalize()
+        }
     }
 
     private fun getFormattedNumber(number: Int): String {
         return getString(R.string.pokemon_number, number.formattedId())
     }
+
+    private fun Int.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 }

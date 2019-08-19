@@ -2,10 +2,10 @@ package co.cesarnorena.pokedex.app.presenter.home.list
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import co.cesarnorena.pokedex.data.model.PokedexEntry

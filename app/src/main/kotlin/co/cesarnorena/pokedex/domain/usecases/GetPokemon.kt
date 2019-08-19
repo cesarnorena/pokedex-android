@@ -12,6 +12,13 @@ class GetPokemon @Inject constructor(
 ) {
     operator fun invoke(id: Int): Single<Pokemon> {
         return remoteRepository.getPokemon(id)
+            .map { pokemon ->
+                pokemon.copy(
+                    id = pokemon.id,
+                    name = pokemon.name,
+                    typeSlots = pokemon.typeSlots.sortedBy { it.position }
+                )
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

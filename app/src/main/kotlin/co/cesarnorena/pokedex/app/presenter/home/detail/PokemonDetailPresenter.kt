@@ -4,6 +4,7 @@ import co.cesarnorena.pokedex.app.libraries.reactivex.addDisposeBag
 import co.cesarnorena.pokedex.domain.usecases.GetPokedexSize
 import co.cesarnorena.pokedex.domain.usecases.GetPokemon
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class PokemonDetailPresenter @Inject constructor(
@@ -18,9 +19,9 @@ class PokemonDetailPresenter @Inject constructor(
     private var pokedexSize: Int = 0
 
     fun onCreateView() {
-        getPokedexSize().doOnSuccess {
+        getPokedexSize().subscribeBy {
             pokedexSize = it
-        }.subscribe().addDisposeBag(disposeBag)
+        }.addDisposeBag(disposeBag)
 
         getPokemonDetails(pokemonId)
     }
@@ -40,12 +41,13 @@ class PokemonDetailPresenter @Inject constructor(
     private fun getPokemonDetails(id: Int) {
         getPokemon(id).doOnSubscribe {
             view?.showProgress(true)
-        }.doOnSuccess { pokemon ->
-            view?.updatePokemonData(pokemon)
-            pokemonId = pokemon.id
         }.doFinally {
             view?.showProgress(false)
-        }.subscribe().addDisposeBag(disposeBag)
+        }.subscribeBy { pokemon ->
+            view?.updatePokemonData(pokemon)
+            view?.updatePokemonTypes(pokemon.typeSlots)
+            pokemonId = pokemon.id
+        }.addDisposeBag(disposeBag)
     }
 
     fun setView(view: PokemonDetailView?) {
