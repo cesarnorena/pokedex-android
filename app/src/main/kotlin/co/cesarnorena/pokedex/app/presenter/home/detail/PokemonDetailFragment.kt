@@ -17,14 +17,7 @@ import co.cesarnorena.pokedex.data.model.Pokemon
 import co.cesarnorena.pokedex.data.model.TypeSlot
 import com.bumptech.glide.Glide
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.nextPokemon
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.pokemonImage
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.pokemonName
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.pokemonNumber
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.previousPokemon
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.progress
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.toolbar
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.typeContainer
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.*
 import javax.inject.Inject
 
 interface PokemonDetailView {
@@ -54,9 +47,9 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

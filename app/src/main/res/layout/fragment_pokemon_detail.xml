@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    android:clickable="true"
-    android:focusable="true"
     tools:context=".app.presenter.home.HomeActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,40 +15,48 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:titleTextColor="@color/light_gray"
+        tools:ignore="UnusedAttribute"
         tools:title="Pikachu" />
 
     <Button
         android:id="@+id/previousPokemon"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/fragment_detail_back_button"
         android:textColor="@color/light_gray"
+        app:cornerRadius="30dp"
         app:layout_constraintEnd_toStartOf="@id/nextPokemon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <Button
         android:id="@+id/nextPokemon"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/fragment_detail_next_button"
         android:textColor="@color/light_gray"
+        app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/previousPokemon"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardImage"
+        android:id="@+id/pokemonDetailContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:background="@android:color/white"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/previousPokemon">
 

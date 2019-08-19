@@ -13,11 +13,11 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBindingModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun splashActivity(): SplashActivity
 
     @ActivityScoped
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun homeActivity(): HomeActivity
 }
 
