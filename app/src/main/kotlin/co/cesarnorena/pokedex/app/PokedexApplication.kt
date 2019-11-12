@@ -6,7 +6,7 @@ import dagger.android.DaggerApplication
 
 class PokedexApplication : DaggerApplication() {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+    override fun applicationInjector(): AndroidInjector<PokedexApplication> {
         return DaggerPokedexComponent.builder()
             .application(this)
             .build()

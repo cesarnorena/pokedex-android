@@ -15,8 +15,8 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    RemoteModule::class,
     LocalModule::class,
+    RemoteModule::class,
     ActivityBindingModule::class,
     FragmentBindingModule::class,
     ApplicationModule::class,

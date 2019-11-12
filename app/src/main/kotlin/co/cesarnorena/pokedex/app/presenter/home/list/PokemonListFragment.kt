@@ -10,8 +10,7 @@ import co.cesarnorena.pokedex.R
 import co.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import co.cesarnorena.pokedex.data.model.PokedexEntry
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_pokemon_list.noInternetMessage
-import kotlinx.android.synthetic.main.fragment_pokemon_list.pokemonListView
+import kotlinx.android.synthetic.main.fragment_pokemon_list.*
 import javax.inject.Inject
 
 interface PokemonListView {
@@ -62,7 +61,7 @@ class PokemonListFragment : DaggerFragment(), PokemonListView {
     }
 
     override fun showNoInternetError(isShown: Boolean) {
-        noInternetMessage.visibility = if (isShown) View.VISIBLE else View.GONE
+        internetError.visibility = if (isShown) View.VISIBLE else View.GONE
         pokemonListView.visibility = if (isShown) View.GONE else View.VISIBLE
     }
 }
