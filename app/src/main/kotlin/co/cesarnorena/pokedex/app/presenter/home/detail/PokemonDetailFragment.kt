@@ -23,6 +23,8 @@ import javax.inject.Inject
 interface PokemonDetailView {
     fun updatePokemonData(pokemon: Pokemon)
     fun updatePokemonTypes(types: List<TypeSlot>)
+    fun nextButtonVisibility(isVisible: Boolean)
+    fun previousButtonVisibility(isVisible: Boolean)
     fun showProgress(isShown: Boolean)
 }
 
@@ -100,6 +102,14 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
         types.forEach {
             typeContainer.addView(typeView(it.type.name))
         }
+    }
+
+    override fun nextButtonVisibility(isVisible: Boolean) {
+        nextPokemon.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    override fun previousButtonVisibility(isVisible: Boolean) {
+        previousPokemon.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     override fun showProgress(isShown: Boolean) {

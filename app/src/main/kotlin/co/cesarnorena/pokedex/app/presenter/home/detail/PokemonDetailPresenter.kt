@@ -21,9 +21,8 @@ class PokemonDetailPresenter @Inject constructor(
     fun onCreateView() {
         getPokedexSize().subscribeBy {
             pokedexSize = it
+            getPokemonDetails(pokemonId)
         }.addDisposeBag(disposeBag)
-
-        getPokemonDetails(pokemonId)
     }
 
     fun onDestroyView() {
@@ -31,14 +30,23 @@ class PokemonDetailPresenter @Inject constructor(
     }
 
     fun onNextPokemon() {
-        if (pokemonId < pokedexSize) getPokemonDetails(pokemonId + 1)
+        if (pokemonId == pokedexSize) return
+
+        pokemonId++
+        getPokemonDetails(pokemonId)
     }
 
     fun onPreviousPokemon() {
-        if (pokemonId > 1) getPokemonDetails(pokemonId - 1)
+        if (pokemonId == 1) return
+
+        pokemonId--
+        getPokemonDetails(pokemonId)
     }
 
     private fun getPokemonDetails(id: Int) {
+        view?.previousButtonVisibility(id != 1)
+        view?.nextButtonVisibility(id != pokedexSize)
+
         getPokemon(id).doOnSubscribe {
             view?.showProgress(true)
         }.doFinally {
