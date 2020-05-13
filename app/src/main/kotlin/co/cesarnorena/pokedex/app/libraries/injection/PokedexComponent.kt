@@ -2,11 +2,7 @@ package co.cesarnorena.pokedex.app.libraries.injection
 
 import android.app.Application
 import co.cesarnorena.pokedex.app.PokedexApplication
-import co.cesarnorena.pokedex.app.libraries.injection.module.ActivityBindingModule
-import co.cesarnorena.pokedex.app.libraries.injection.module.ApplicationModule
-import co.cesarnorena.pokedex.app.libraries.injection.module.FragmentBindingModule
-import co.cesarnorena.pokedex.app.libraries.injection.module.LocalModule
-import co.cesarnorena.pokedex.app.libraries.injection.module.RemoteModule
+import co.cesarnorena.pokedex.app.libraries.injection.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

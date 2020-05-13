@@ -14,13 +14,13 @@
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:titleTextColor="@color/light_gray"
+        app:titleTextColor="@color/white"
         tools:ignore="UnusedAttribute"
         tools:title="Pikachu" />
 
     <Button
         android:id="@+id/previousPokemon"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,7 +28,7 @@
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/fragment_detail_back_button"
-        android:textColor="@color/light_gray"
+        android:textColor="@color/white"
         app:cornerRadius="30dp"
         app:layout_constraintEnd_toStartOf="@id/nextPokemon"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
 
     <Button
         android:id="@+id/nextPokemon"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -44,7 +44,7 @@
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/fragment_detail_next_button"
-        android:textColor="@color/light_gray"
+        android:textColor="@color/white"
         app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/previousPokemon"

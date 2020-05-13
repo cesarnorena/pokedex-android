@@ -14,7 +14,7 @@
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/fragment_list_title"
-        app:titleTextColor="@color/light_gray" />
+        app:titleTextColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokemonListView"
