@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cesarnorena.pokedex.R
 import com.cesarnorena.pokedex.app.libraries.extensions.formattedId
 import com.cesarnorena.pokedex.data.model.PokedexEntry
-import com.bumptech.glide.Glide
 
 class PokemonListAdapter(
     context: Context,
