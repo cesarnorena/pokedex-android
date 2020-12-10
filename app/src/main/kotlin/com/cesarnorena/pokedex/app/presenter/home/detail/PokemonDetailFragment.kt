@@ -10,14 +10,15 @@ import android.view.ViewGroup
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.cesarnorena.pokedex.R
 import com.cesarnorena.pokedex.app.libraries.extensions.formattedId
 import com.cesarnorena.pokedex.app.presenter.home.HomeActivity
 import com.cesarnorena.pokedex.data.model.Pokemon
 import com.cesarnorena.pokedex.data.model.TypeSlot
-import com.bumptech.glide.Glide
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.*
+import java.util.*
 import javax.inject.Inject
 
 interface PokemonDetailView {
@@ -93,8 +94,8 @@ class PokemonDetailFragment : DaggerFragment(), PokemonDetailView {
     override fun updatePokemonData(pokemon: Pokemon) {
         Glide.with(this).load(pokemon.imageUrl).into(pokemonImage)
         pokemonNumber.text = getFormattedNumber(pokemon.id)
-        pokemonName.text = pokemon.name.capitalize()
-        toolbar.title = pokemon.name.capitalize()
+        pokemonName.text = pokemon.name.capitalize(Locale.getDefault())
+        toolbar.title = pokemon.name.capitalize(Locale.getDefault())
     }
 
     override fun updatePokemonTypes(types: List<TypeSlot>) {

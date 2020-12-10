@@ -17,12 +17,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:titleTextColor="@color/white"
-        tools:ignore="UnusedAttribute"
         tools:title="Pikachu" />
 
     <Button
         android:id="@+id/previousPokemon"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,11 +34,11 @@
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:rippleColor="@color/gray"
         tools:visibility="visible" />
 
     <Button
         android:id="@+id/nextPokemon"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -54,6 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:rippleColor="@color/gray"
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Barrier
