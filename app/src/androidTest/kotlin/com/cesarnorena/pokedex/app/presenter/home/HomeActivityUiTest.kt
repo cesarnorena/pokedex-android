@@ -1,6 +1,6 @@
 package com.cesarnorena.pokedex.app.presenter.home
 
-import android.content.Intent
+import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -10,8 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cesarnorena.pokedex.R
 import com.cesarnorena.pokedex.app.PokedexApplication
 import com.cesarnorena.pokedex.app.libraries.injection.DaggerPokedexComponentTest
@@ -28,16 +27,12 @@ import io.reactivex.Single
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class HomeActivityUiTest {
-
-    @get:Rule
-    val activityRule = ActivityTestRule(HomeActivity::class.java, false, false)
 
     @Inject
     lateinit var localRepository: LocalRepository
@@ -59,8 +54,8 @@ class HomeActivityUiTest {
 
     @Test
     fun showPokemonDetailsOfFirstItem() {
-        val typeList = listOf(TypeSlot(0, Type("grass")), TypeSlot(1, Type("poison")))
-        val pokemon = Pokemon(1, "bulbasaur", typeList)
+        val typeSlots = listOf(TypeSlot(0, Type("grass")), TypeSlot(1, Type("poison")))
+        val pokemon = Pokemon(1, "bulbasaur", typeSlots)
         val pokedex = listOf(PokedexEntry(pokemon.id, Specie(pokemon.name)))
 
         whenever(localRepository.getPokedex())
@@ -69,7 +64,7 @@ class HomeActivityUiTest {
         whenever(remoteRepository.getPokemon(pokemon.id))
             .thenReturn(Single.just(pokemon))
 
-        launchActivity()
+        val scenario = launchActivity()
 
         onView(withId(R.id.pokemonListView))
             .check(matches(isDisplayed()))
@@ -81,6 +76,8 @@ class HomeActivityUiTest {
             withId(R.id.pokemonName),
             isDescendantOfA(withId(R.id.pokemonDetailContainer))
         )).check(matches(withText(pokemon.name.capitalize())))
+
+        scenario.close()
     }
 
     @Test
@@ -88,14 +85,16 @@ class HomeActivityUiTest {
         whenever(localRepository.getPokedex())
             .thenReturn(Single.error(Exception()))
 
-        launchActivity()
+        val scenario = launchActivity()
 
         onView(withId(R.id.pokemonListView))
             .check(matches(not(isDisplayed())))
 
         onView(withId(R.id.internetError))
             .check(matches(isDisplayed()))
+
+        scenario.close()
     }
 
-    private fun launchActivity() = activityRule.launchActivity(Intent())
+    private fun launchActivity() = ActivityScenario.launch(HomeActivity::class.java)
 }
