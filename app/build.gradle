@@ -57,7 +57,7 @@ dependencies {
 
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
-    implementation "com.google.code.gson:gson:2.8.5"
+    implementation "com.google.code.gson:gson:2.8.6"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     implementation "androidx.room:room-runtime:$room_version"
@@ -73,7 +73,7 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:4.11.0"
 
-    implementation "com.airbnb.android:lottie:2.7.0"
+    implementation "com.airbnb.android:lottie:3.3.1"
 
     ktlint "com.github.shyiko:ktlint:0.31.0"
 
